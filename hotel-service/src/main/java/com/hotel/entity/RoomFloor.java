@@ -1,0 +1,44 @@
+package com.hotel.entity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+
+/**
+ * The persistent class for the room_floor database table.
+ * 
+ */
+@Data
+@Entity
+@Table(name="room_floor")
+@NamedQuery(name="RoomFloor.findAll", query="SELECT r FROM RoomFloor r")
+public class RoomFloor implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private int floor;
+
+	private String alias;
+
+	//bi-directional many-to-one association to Room
+	@OneToMany(mappedBy="roomFloor")
+	private List<Room> roomList;
+
+	public Room addRoomList(Room roomList) {
+		getRoomList().add(roomList);
+		roomList.setRoomFloor(this);
+
+		return roomList;
+	}
+
+	public Room removeRoomList(Room roomList) {
+		getRoomList().remove(roomList);
+		roomList.setRoomFloor(null);
+
+		return roomList;
+	}
+
+}
