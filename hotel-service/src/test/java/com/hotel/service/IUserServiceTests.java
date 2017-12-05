@@ -12,14 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Import(HotelServiceApplication.class)
-public class UserServiceTests {
+public class IUserServiceTests {
 
     @Autowired
-    UserService userService;
+    IUserService IUserService;
 
     @Test
     public void testSave() {
         User user = new User();
-        userService.save(user);
+        IUserService.save(user);
     }
 }

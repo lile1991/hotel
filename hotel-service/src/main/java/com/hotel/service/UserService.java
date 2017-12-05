@@ -7,13 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserService {
+public class UserService extends BaseService<User, Long, UserRepository> implements IUserService {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Transactional
-    public User save(User user) {
-        return userRepository.save(user);
-    }
 }
