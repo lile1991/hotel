@@ -21,6 +21,5 @@ public class Room_ {
 	public static volatile SingularAttribute<Room, RoomFloor> roomFloor;
 	public static volatile SingularAttribute<Room, Long> updateUserId;
 	public static volatile ListAttribute<Room, CheckRecord> checkRecordList;
-	public static volatile SingularAttribute<Room, RoomType> roomType1;
-	public static volatile SingularAttribute<Room, RoomType> roomType2;
+	public static volatile SingularAttribute<Room, RoomType> roomType;
 }

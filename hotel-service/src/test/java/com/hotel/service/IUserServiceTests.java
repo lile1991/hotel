@@ -15,11 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class IUserServiceTests {
 
     @Autowired
-    IUserService IUserService;
+    IUserService userService;
 
     @Test
     public void testSave() {
         User user = new User();
-        IUserService.save(user);
+//        userService.save(user);
     }
 }
