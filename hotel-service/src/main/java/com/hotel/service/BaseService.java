@@ -13,6 +13,8 @@ import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class BaseService<T, ID extends Serializable, R extends CrudRepository<T, ID>> {
@@ -54,13 +56,13 @@ public abstract class BaseService<T, ID extends Serializable, R extends CrudRepo
     }
 
     @Transactional(readOnly = true)
-    public Iterable<T> findAll() {
-        return repository.findAll();
+    public List<T> findAll() {
+        return iterable2List(repository.findAll());
     }
 
     @Transactional(readOnly = true)
-    public Iterable<T> findAll(Iterable<ID> ids) {
-        return repository.findAll(ids);
+    public List<T> findAll(Iterable<ID> ids) {
+        return iterable2List(repository.findAll(ids));
     }
 
     @Transactional(readOnly = true)
@@ -95,8 +97,8 @@ public abstract class BaseService<T, ID extends Serializable, R extends CrudRepo
     }
 
     @Transactional(readOnly = true)
-    public Iterable<T> findAll(Sort sort) {
-        return repositoryPagingAndSortingRepository().findAll(sort);
+    public List<T> findAll(Sort sort) {
+        return iterable2List(repositoryPagingAndSortingRepository().findAll(sort));
     }
 
     @Transactional(readOnly = true)
@@ -133,5 +135,16 @@ public abstract class BaseService<T, ID extends Serializable, R extends CrudRepo
     @Transactional(readOnly = true)
     public long count(Specification<T> spec) {
         return repositoryJpaSpecificationExecutor.count(spec);
+    }
+
+
+    public List<T> iterable2List(Iterable<T> iterable) {
+        if(iterable == null) {
+            return null;
+        }
+        List<T> list = new ArrayList<>();
+        Iterator<T> iterator = iterable.iterator();
+        iterator.forEachRemaining(list::add);
+        return list;
     }
 }

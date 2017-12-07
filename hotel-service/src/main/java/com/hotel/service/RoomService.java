@@ -12,9 +12,8 @@ import javax.persistence.criteria.Predicate;
 import java.util.List;
 
 @Service
-public class RoomService extends BaseService<Room, Long, RoomRepository> implements IRoomService {
+public class RoomService extends BaseService<Room, Long, RoomRepository> {
 
-    @Override
     @Transactional(readOnly = true)
     public List<Room> findManage(RoomQueryDto queryDto) {
         return super.findAll((root, query, cb) -> {

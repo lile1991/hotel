@@ -21,6 +21,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import {RoomtTypeApi} from '@/api/roomType'
 
   export default {
     name: 'RoomManage',
@@ -33,12 +34,7 @@
     data() {
       return {
         tabPosition: "left",
-        roomTypes: [
-          "标准单间",
-          "豪华单间",
-          "标准双间",
-          "豪华双间"
-        ],
+        roomTypes: null,
         rooms: [
           {
             number: "101",
@@ -51,6 +47,9 @@
         ]
       }
     },
+    created() {
+      this.fetchRoomType()
+    },
     methods: {
       checkIn(room) {
         alert("入住" + room.number)
@@ -60,6 +59,9 @@
       },
       disable(room) {
         alert("停用")
+      },
+      fetchRoomType() {
+        this.roomTypes = this.RoomtTypeApi.findAll();
       }
     }
   }

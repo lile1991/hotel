@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication(exclude = LiquibaseAutoConfiguration.class)
+@SpringBootApplication(exclude = {LiquibaseAutoConfiguration.class})
 @Import({HotelServiceConfig.class, HotelWebConfig.class})
 public class HotelWebApplication {
     public static void main(String[] args) {

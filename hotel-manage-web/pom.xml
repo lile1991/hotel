@@ -23,7 +23,7 @@
         <dependency>
             <groupId>hotel</groupId>
             <artifactId>hotel-service</artifactId>
-            <!--<scope>runtime</scope>-->
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
