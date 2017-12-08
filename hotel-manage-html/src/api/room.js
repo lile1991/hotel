@@ -1,27 +1,16 @@
 import fetch from '@/utils/fetch'
 
-export function findRooms(username, password) {
-  return fetch({
-    url: '/user/login',
-    method: 'post',
-    data: {
-      username,
-      password
-    }
-  })
+let RoomtApi = {
+  fullPage: function(path) {
+    return "/room/" + path;
+  },
+  findManage: function(data) {
+    return fetch({
+      url: this.fullPage('findManage'),
+      method: 'post',
+      data: data
+    });
+  }
 }
 
-export function getInfo(token) {
-  return fetch({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
-
-export function logout() {
-  return fetch({
-    url: '/user/logout',
-    method: 'post'
-  })
-}
+export default RoomtApi;

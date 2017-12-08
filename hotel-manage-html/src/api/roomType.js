@@ -1,15 +1,15 @@
 import fetch from '@/utils/fetch'
 
-let RoomtTypeApi = {
+let RoomTypeApi = {
   fullPage: function(path) {
     return "/roomType/" + path;
   },
   findAll: function() {
     return fetch({
-      url: fullPage('findAll'),
+      url: this.fullPage('findAll'),
       method: 'get'
     });
   }
 }
 
-export default RoomtTypeApi;
+export default RoomTypeApi;

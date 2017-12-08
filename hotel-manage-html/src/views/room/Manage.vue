@@ -1,7 +1,7 @@
 <template>
   <div class="room-container">
     <el-tabs :tab-position="tabPosition">
-      <el-tab-pane :label="roomType" v-for="roomType in roomTypes">
+      <el-tab-pane :label="roomType.name" v-for="roomType in roomTypes" @tab-click="fetchRoomManage(roomType.id)">
         <el-row :gutter="20">
           <el-col :span="4" v-for="room in rooms">
             <el-card :body-style="{ padding: '0px' }" class="room-card">
@@ -21,7 +21,8 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import {RoomtTypeApi} from '@/api/roomType'
+  import RoomTypeApi from '@/api/roomType'
+  import RoomApi from '@/api/room'
 
   export default {
     name: 'RoomManage',
@@ -35,20 +36,11 @@
       return {
         tabPosition: "left",
         roomTypes: null,
-        rooms: [
-          {
-            number: "101",
-            state: "入住"
-          },
-          {
-            number: "102",
-            state: "空置"
-          }
-        ]
+        rooms: null
       }
     },
     created() {
-      this.fetchRoomType()
+      this.fetchRoomType();
     },
     methods: {
       checkIn(room) {
@@ -61,7 +53,15 @@
         alert("停用")
       },
       fetchRoomType() {
-        this.roomTypes = this.RoomtTypeApi.findAll();
+        RoomTypeApi.findAll().then(response => {
+          this.roomTypes = response.data;
+          this.fetchRoomManage(this.roomTypes[0].id);
+        });
+      },
+      fetchRoomManage(roomTypeId) {
+        RoomApi.findManage({roomType: {id: roomTypeId}}).then(response => {
+          this.rooms = response.data;
+        });
       }
     }
   }

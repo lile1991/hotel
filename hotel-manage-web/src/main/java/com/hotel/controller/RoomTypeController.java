@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("room")
+@RequestMapping("roomType")
 public class RoomTypeController extends BaseController {
 
     @Autowired
