@@ -1,4 +1,11 @@
+server:
+  port: 8080
+  servlet-path: /hotel-manage
+
 spring:
+  application:
+    name: "hotel-manage-web"
+
   datasource:
     url: jdbc:mysql://localhost:3306/hotel
     driver-class-name: com.mysql.jdbc.Driver
@@ -14,6 +21,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
 logging:
   level: debug
-  config:
