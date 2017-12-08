@@ -28,9 +28,11 @@ service.interceptors.response.use(
   * code为非20000是抛错 可结合自己业务进行修改
   */
     const res = response.data
-    if (res.code !== 20000) {
+    if (res.state === 0) {
+      return response.data
+    } else {
       Message({
-        message: res.data,
+        message: res.msg,
         type: 'error',
         duration: 5 * 1000
       })
@@ -48,8 +50,6 @@ service.interceptors.response.use(
         })
       }
       return Promise.reject('error')
-    } else {
-      return response.data
     }
   },
   error => {
