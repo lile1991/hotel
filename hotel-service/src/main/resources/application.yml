@@ -4,7 +4,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password:
-    type: org.h2.jdbcx.JdbcDataSource
+    type: org.springframework.jdbc.datasource.SimpleDriverDataSource
   jpa:
     hibernate:
       ddl-auto: none
