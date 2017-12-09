@@ -1,39 +1,22 @@
 package com.hotel.service;
 
+import com.hotel.dao.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class BaseService<T, ID extends Serializable, R extends CrudRepository<T, ID>> {
+public abstract class BaseService<T, ID extends Serializable, R extends BaseRepository<T, ID>> {
 
     @Autowired
     protected R repository;
-
-    private PagingAndSortingRepository<T, ID> repositoryPagingAndSortingRepository;
-    private JpaSpecificationExecutor<T> repositoryJpaSpecificationExecutor;
-
-    @PostConstruct
-    public void init() {
-        if(repository instanceof PagingAndSortingRepository) {
-            repositoryPagingAndSortingRepository = (PagingAndSortingRepository<T, ID>) repository;
-        }
-        if(repository instanceof JpaSpecificationExecutor) {
-            repositoryJpaSpecificationExecutor = (JpaSpecificationExecutor<T>) repository;
-        }
-    }
 
     @Transactional
     public <S extends T> T save(S entity) {
@@ -91,50 +74,40 @@ public abstract class BaseService<T, ID extends Serializable, R extends CrudRepo
     }
 
 
-    private PagingAndSortingRepository<T, ID> repositoryPagingAndSortingRepository() {
-        Assert.notNull(repositoryPagingAndSortingRepository, repository.getClass().getName() + "不支持分页");
-        return repositoryPagingAndSortingRepository;
-    }
-
     @Transactional(readOnly = true)
     public List<T> findAll(Sort sort) {
-        return iterable2List(repositoryPagingAndSortingRepository().findAll(sort));
+        return iterable2List(repository.findAll(sort));
     }
 
     @Transactional(readOnly = true)
     public Page<T> findAll(Pageable pageable) {
-        return repositoryPagingAndSortingRepository().findAll(pageable);
+        return repository.findAll(pageable);
     }
 
-
-    private JpaSpecificationExecutor<T> repositoryJpaSpecificationExecutor() {
-        Assert.notNull(repositoryJpaSpecificationExecutor, repository.getClass().getName() + "不支持条件查询");
-        return repositoryJpaSpecificationExecutor;
-    }
 
     @Transactional(readOnly = true)
     public T findOne(Specification<T> spec) {
-        return repositoryJpaSpecificationExecutor.findOne(spec);
+        return repository.findOne(spec);
     }
 
     @Transactional(readOnly = true)
     public List<T> findAll(Specification<T> spec) {
-        return repositoryJpaSpecificationExecutor.findAll(spec);
+        return repository.findAll(spec);
     }
 
     @Transactional(readOnly = true)
     public Page<T> findAll(Specification<T> spec, Pageable pageable) {
-        return repositoryJpaSpecificationExecutor.findAll(spec, pageable);
+        return repository.findAll(spec, pageable);
     }
 
     @Transactional(readOnly = true)
     public List<T> findAll(Specification<T> spec, Sort sort) {
-        return repositoryJpaSpecificationExecutor.findAll(spec, sort);
+        return repository.findAll(spec, sort);
     }
 
     @Transactional(readOnly = true)
     public long count(Specification<T> spec) {
-        return repositoryJpaSpecificationExecutor.count(spec);
+        return repository.count(spec);
     }
 
 
