@@ -1,6 +1,8 @@
 package com.hotel.config;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -37,9 +39,9 @@ public class HotelWebConfig extends WebMvcConfigurerAdapter {
         objectMapper.registerModule(new Hibernate5Module());
         return objectMapper;
     }*/
-
-//    @Bean
-    public Hibernate5Module hibernate5Module() {
-        return new Hibernate5Module();
+    
+    @Bean
+    public Hibernate5Module hibernate5Module(SessionFactory sessionFactory) {
+        return new Hibernate5Module(sessionFactory);
     }
 }

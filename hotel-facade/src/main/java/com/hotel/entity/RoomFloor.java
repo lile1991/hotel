@@ -21,7 +21,7 @@ public class RoomFloor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int floor;
+	private Integer floor;
 
 	private String alias;
 

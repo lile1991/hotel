@@ -23,7 +23,7 @@ public class RoomType implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private Long charge;
 
@@ -50,6 +50,6 @@ public class RoomType implements Serializable {
 	private Long updateUserId;
 
 	//bi-directional many-to-one association to Room
-	@OneToMany(mappedBy="roomType", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="roomType")
 	private List<Room> roomList;
 }

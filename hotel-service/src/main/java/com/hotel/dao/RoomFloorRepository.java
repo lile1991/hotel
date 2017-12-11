@@ -4,5 +4,5 @@ import com.hotel.entity.RoomFloor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoomFloorRepository extends BaseRepository<RoomFloor, Long> {
+public interface RoomFloorRepository extends BaseRepository<RoomFloor, Integer> {
 }

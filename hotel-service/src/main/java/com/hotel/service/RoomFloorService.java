@@ -5,5 +5,5 @@ import com.hotel.entity.RoomFloor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoomFloorService extends BaseService<RoomFloor, Long, RoomFloorRepository> {
+public class RoomFloorService extends BaseService<RoomFloor, Integer, RoomFloorRepository> {
 }

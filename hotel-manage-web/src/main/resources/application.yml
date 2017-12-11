@@ -16,6 +16,7 @@ spring:
     password:
     type: org.springframework.jdbc.datasource.SimpleDriverDataSource
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: none
     database: MYSQL
@@ -26,4 +27,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
 logging:
-  level: debug
+  level:
+    com.hotel: debug
+    org.hibernate.SQL: debug
+    org.springframework: debug
+  file: hotel.log
