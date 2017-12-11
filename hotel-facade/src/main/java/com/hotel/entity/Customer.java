@@ -10,8 +10,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the customer database table.
- * 
+ * 客户/会员
  */
 @Setter
 @Getter
@@ -31,7 +30,7 @@ public class Customer implements Serializable {
 	@Column(name="create_user_id")
 	private Long createUserId;
 
-	private String hotel;
+	private String mobile;
 
 	@Column(name="id_card")
 	private String idCard;

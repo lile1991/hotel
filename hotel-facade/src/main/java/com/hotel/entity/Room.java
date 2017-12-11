@@ -11,8 +11,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the room database table.
- *
+ * 房间
  */
 @Getter
 @Setter
@@ -38,7 +37,7 @@ public class Room implements Serializable {
 
 	private Long deposit;
 
-	private int number;
+	private Integer number;
 
 	private String state;
 

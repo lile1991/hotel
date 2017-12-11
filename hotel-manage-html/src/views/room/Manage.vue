@@ -1,7 +1,7 @@
 <template>
   <div class="room-container">
-    <el-tabs :tab-position="tabPosition">
-      <el-tab-pane :label="roomType.name" v-for="roomType in roomTypes" @tab-click="fetchRoomManage(roomType.id)">
+    <el-tabs :tab-position="tabPosition" v-loading="loadingRooms" @tab-click="fetchRoomManage">
+      <el-tab-pane :label="roomType.name" v-for="roomType in roomTypes">
         <el-row :gutter="20">
           <el-col :span="4" v-for="room in rooms">
             <el-card :body-style="{ padding: '0px' }" class="room-card">
@@ -36,7 +36,8 @@
       return {
         tabPosition: "left",
         roomTypes: null,
-        rooms: null
+        rooms: null,
+        loadingRooms: false
       }
     },
     created() {
@@ -44,7 +45,7 @@
     },
     methods: {
       checkIn(room) {
-        alert("入住" + room.number)
+        this.$router.push({ path: '/room/checkIn', room: room})
       },
       reserve(room) {
         alert("预定")
@@ -54,14 +55,18 @@
       },
       fetchRoomType() {
         RoomTypeApi.findAll().then(response => {
-          console.log(response);
           this.roomTypes = response.data;
-          // this.fetchRoomManage(this.roomTypes[0].id);
+          if(this.roomTypes && this.roomTypes.length > 0) {
+            this.fetchRoomManage({index: 0});
+          }
         });
       },
-      fetchRoomManage(roomTypeId) {
-        RoomApi.findManage({roomType: {id: roomTypeId}}).then(response => {
+      fetchRoomManage(tab) {
+        let roomType = this.roomTypes[tab.index];
+        this.loadingRooms = true;
+        RoomApi.findManage({roomType: {id: roomType.id}}).then(response => {
           this.rooms = response.data;
+          this.loadingRooms = false;
         });
       }
     }

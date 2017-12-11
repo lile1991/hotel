@@ -9,8 +9,7 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the opt_log database table.
- * 
+ * 操作日志
  */
 @Getter
 @Setter

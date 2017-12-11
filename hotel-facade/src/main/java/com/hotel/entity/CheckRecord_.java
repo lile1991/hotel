@@ -1,6 +1,7 @@
 package com.hotel.entity;
 
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import java.util.Date;
@@ -22,4 +23,5 @@ public class CheckRecord_ {
 	public static volatile SingularAttribute<CheckRecord, Long> createUserId;
 	public static volatile SingularAttribute<CheckRecord, Long> updateUserId;
 	public static volatile SingularAttribute<CheckRecord, Customer> customer;
+	public static volatile ListAttribute<CheckRecord, CheckInCustomer> checkInCustomerList;
 }

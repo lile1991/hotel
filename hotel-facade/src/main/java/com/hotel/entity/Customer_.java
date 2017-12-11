@@ -11,7 +11,7 @@ import java.util.Date;
 public class Customer_ {
 	public static volatile SingularAttribute<Customer, Long> id;
 	public static volatile SingularAttribute<Customer, Date> createTime;
-	public static volatile SingularAttribute<Customer, String> hotel;
+	public static volatile SingularAttribute<Customer, String> mobile;
 	public static volatile SingularAttribute<Customer, String> idCard;
 	public static volatile SingularAttribute<Customer, String> name;
 	public static volatile SingularAttribute<Customer, String> state;

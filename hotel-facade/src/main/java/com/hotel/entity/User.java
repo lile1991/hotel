@@ -10,8 +10,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the user database table.
- * 
+ * 管理人员
  */
 @Getter
 @Setter

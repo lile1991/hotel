@@ -9,8 +9,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the room_floor database table.
- * 
+ * 楼层
  */
 @Setter
 @Getter

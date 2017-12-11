@@ -2,6 +2,7 @@ package com.hotel.controller;
 
 import com.hotel.dto.RoomQueryDto;
 import com.hotel.entity.CheckRecord;
+import com.hotel.entity.Room;
 import com.hotel.manage.CheckRecordManage;
 import com.hotel.manage.RoomManage;
 import com.hotel.vo.ResultVo;
@@ -25,6 +26,12 @@ public class RoomController extends BaseController {
     @ResponseBody
     public ResultVo<?> findManage(@RequestBody RoomQueryDto roomQueryDto) {
         return ResultVo.success(roomManage.findManage(roomQueryDto));
+    }
+
+    @RequestMapping("findAll")
+    @ResponseBody
+    public ResultVo<?> findAll(@RequestBody Room room) {
+        return ResultVo.success(roomManage.findAll(room));
     }
 
     @RequestMapping("checkIn")

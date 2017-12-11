@@ -24,4 +24,5 @@ public class RoomService extends BaseService<Room, Long, RoomRepository> {
             return predicate;
         }, new Sort(new Sort.Order(Sort.Direction.ASC, Room_.number.getName())));
     }
+
 }

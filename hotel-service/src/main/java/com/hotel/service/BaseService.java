@@ -2,6 +2,7 @@ package com.hotel.service;
 
 import com.hotel.dao.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -85,6 +86,7 @@ public abstract class BaseService<T, ID extends Serializable, R extends BaseRepo
     }
 
 
+    //    By Specification
     @Transactional(readOnly = true)
     public T findOne(Specification<T> spec) {
         return repository.findOne(spec);
@@ -108,6 +110,43 @@ public abstract class BaseService<T, ID extends Serializable, R extends BaseRepo
     @Transactional(readOnly = true)
     public long count(Specification<T> spec) {
         return repository.count(spec);
+    }
+
+
+    //    By Example
+    @Transactional(readOnly = true)
+    public T findOne(Example<T> example) {
+        return repository.findOne(example);
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> findAll(Example<T> example) {
+        return repository.findAll(example);
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> findAll(T t) {
+        return findAll(Example.of(t));
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> findAll(Example<T> example, Sort sort) {
+        return repository.findAll(example, sort);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<T> findAll(Example<T> example, Pageable pageable) {
+        return repository.findAll(example, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public long count(Example<T> example) {
+        return repository.count(example);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean exists(Example<T> example) {
+        return repository.exists(example);
     }
 
 

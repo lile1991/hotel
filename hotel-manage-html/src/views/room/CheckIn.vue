@@ -1,48 +1,62 @@
 <template>
   <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="客户姓名" prop="customerName" required>
-        <el-input v-model="ruleForm.name"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号" prop="customerMobile" required>
-        <el-input v-model="ruleForm.customerMobile"></el-input>
-      </el-form-item>
-      <el-form-item label="房号" prop="roomNumber" required>
-        <el-select v-model="ruleForm.region" placeholder="请选择">
-          <el-option label="101" value="101"></el-option>
-          <el-option label="102" value="102"></el-option>
+    <el-form :model="checkRecord" :rules="rules" ref="checkRecordForm" label-width="100px">
+      <el-form-item label="房号" prop="roomNum" required>
+        <el-select v-model="checkRecord.room.number" placeholder="请选择">
+          <el-option v-for="room in rooms" :key="room.id" :value="room.id" :label="room.alias"/>
         </el-select>
-      </el-form-item>
-
-      <el-form-item label="身份证号" prop="customerIdCard" required>
-        <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
       <el-col :span="12">
         <el-form-item label="房费" prop="customerIdCard" required>
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="checkRecord.room.name"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item label="实付房费" prop="customerIdCard" required>
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="checkRecord.room.name"></el-input>
         </el-form-item>
       </el-col>
 
       <el-form-item label="押金" prop="customerIdCard" required>
-        <el-input v-model="ruleForm.name"></el-input>
+        <el-input v-model="checkRecord.room.name"></el-input>
       </el-form-item>
       <el-form-item label="入住日期" required>
         <el-date-picker
-          v-model="value3"
+          v-model="date3"
           type="datetimerange"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
+
+
+      <el-row :gutter="20" v-for="(checkInCustomer, index) in checkRecord.checkInCustomerList">
+        <el-col :span="6">
+          <el-form-item label="客户姓名" prop="customerName" required>
+            <el-input v-model="checkInCustomer.name"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="手机号" prop="customerMobile" required>
+            <el-input v-model="checkInCustomer.mobile"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="身份证号" prop="customerIdCard" required>
+            <el-input v-model="checkInCustomer.idCard"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="primary" v-on:click="addCheckInCustomer" v-if="index === checkRecord.checkInCustomerList.length - 1">添加入住人员</el-button>
+          <el-button type="danger" v-on:click="removeCheckInCustomer(index)" v-else>删除</el-button>
+        </el-col>
+      </el-row>
+
+
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">登记</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('checkRecordForm')">登记</el-button>
+        <el-button @click="resetForm('checkRecordForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -50,15 +64,19 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import RoomApi from '@/api/room'
 
   export default {
     data() {
       return {
-        ruleForm: {
-          name: '',
+        rooms: [],
+        checkRecord: {
+          room: {},
+          checkInCustomerList: [{}],
           region: '',
           date1: '',
           date2: '',
+          date3: '',
           delivery: false,
           type: [],
           resource: '',
@@ -90,6 +108,10 @@
         }
       };
     },
+    created() {
+      // this.loadRoomTypes();
+      this.loadRooms();
+    },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -103,6 +125,17 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      loadRooms() {
+        RoomApi.findAll({}).then(response => {
+          this.rooms = response.data;
+        });
+      },
+      addCheckInCustomer() {
+        this.checkRecord.checkInCustomerList.push({});
+      },
+      removeCheckInCustomer(index) {
+        this.checkRecord.checkInCustomerList.splice(index, 1);
       }
     }
   }

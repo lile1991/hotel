@@ -19,4 +19,9 @@ public class RoomApiCtrl implements RoomApi {
     public List<Room> findManage(RoomQueryDto queryDto) {
         return roomService.findManage(queryDto);
     }
+
+    @Override
+    public List<Room> findAll(Room room) {
+        return roomService.findAll(room);
+    }
 }

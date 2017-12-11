@@ -16,4 +16,8 @@ public class RoomManage {
     public List<Room> findManage(RoomQueryDto roomQueryDto) {
         return roomApi.findManage(roomQueryDto);
     }
+
+    public List<Room> findAll(Room room) {
+        return roomApi.findAll(room);
+    }
 }

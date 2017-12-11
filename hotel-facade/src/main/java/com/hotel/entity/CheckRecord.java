@@ -6,11 +6,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
- * The persistent class for the check_record database table.
- * 
+ * 入住记录
  */
 @Getter
 @Setter
@@ -62,6 +62,9 @@ public class CheckRecord implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="customer_id")
 	private Customer customer;
+
+	@OneToMany(mappedBy="checkRecord", fetch = FetchType.LAZY)
+	private List<CheckInCustomer> checkInCustomerList;
 
 	//bi-directional many-to-one association to Room
 	@ManyToOne(fetch=FetchType.LAZY)

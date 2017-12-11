@@ -10,6 +10,13 @@ let RoomtApi = {
       method: 'post',
       data: data
     });
+  },
+  findAll: function(condition) {
+    return fetch({
+      url: this.fullPage('findAll'),
+      method: 'post',
+      data: condition
+    });
   }
 }
 
