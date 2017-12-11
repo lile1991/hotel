@@ -54,8 +54,9 @@
       },
       fetchRoomType() {
         RoomTypeApi.findAll().then(response => {
+          console.log(response);
           this.roomTypes = response.data;
-          this.fetchRoomManage(this.roomTypes[0].id);
+          // this.fetchRoomManage(this.roomTypes[0].id);
         });
       },
       fetchRoomManage(roomTypeId) {

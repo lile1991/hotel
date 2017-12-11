@@ -1,6 +1,7 @@
 package com.hotel.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +13,8 @@ import java.util.List;
  * The persistent class for the room_type database table.
  * 
  */
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name="room_type")
 @NamedQuery(name="RoomType.findAll", query="SELECT r FROM RoomType r")
@@ -48,6 +50,6 @@ public class RoomType implements Serializable {
 	private Long updateUserId;
 
 	//bi-directional many-to-one association to Room
-	@OneToMany(mappedBy="roomType")
+	@OneToMany(mappedBy="roomType", fetch = FetchType.LAZY)
 	private List<Room> roomList;
 }

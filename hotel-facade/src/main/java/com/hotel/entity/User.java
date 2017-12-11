@@ -1,6 +1,7 @@
 package com.hotel.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +13,8 @@ import java.util.List;
  * The persistent class for the user database table.
  * 
  */
-@Data
+@Getter
+@Setter
 @Entity
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
@@ -41,7 +43,7 @@ public class User implements Serializable {
 	private Long updateUserId;
 
 	//bi-directional many-to-one association to CheckRecord
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
 	private List<CheckRecord> checkRecordList;
 
 }

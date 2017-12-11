@@ -1,6 +1,7 @@
 package com.hotel.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +12,8 @@ import java.util.Date;
  * The persistent class for the opt_log database table.
  * 
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="opt_log")
 @NamedQuery(name="OptLog.findAll", query="SELECT o FROM OptLog o")
