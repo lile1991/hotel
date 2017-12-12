@@ -43,9 +43,15 @@ public class CheckRecord implements Serializable {
 	@Column(name="over_time")
 	private Date overTime;
 
+	/**
+	 * 实付房费
+	 */
 	@Column(name="payed_charge")
 	private Long payedCharge;
 
+	/**
+	 * 实付押金
+	 */
 	@Column(name="payed_deposit")
 	private Long payedDeposit;
 
