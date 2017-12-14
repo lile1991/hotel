@@ -5,6 +5,7 @@ import com.hotel.dto.RoomQueryDto;
 import com.hotel.entity.Room;
 import com.hotel.entity.RoomType_;
 import com.hotel.entity.Room_;
+import com.hotel.enums.RoomStateEnum;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,4 +26,13 @@ public class RoomService extends BaseService<Room, Long, RoomRepository> {
         }, new Sort(new Sort.Order(Sort.Direction.ASC, Room_.number.getName())));
     }
 
+    @Transactional
+    public int enable(Long id) {
+        return repository.changeState(id, RoomStateEnum.EMPTY.name());
+    }
+
+    @Transactional
+    public int disable(Long id) {
+        return repository.changeState(id, RoomStateEnum.STOP.name());
+    }
 }

@@ -11,4 +11,8 @@ public interface RoomApi {
     List<Room> findManage(RoomQueryDto queryDto);
 
     List<Room> findAll(Room room);
+
+    int enable(Long id);
+
+    int disable(Long id);
 }

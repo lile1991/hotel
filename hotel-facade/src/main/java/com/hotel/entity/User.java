@@ -42,7 +42,7 @@ public class User implements Serializable {
 	private Long updateUserId;
 
 	//bi-directional many-to-one association to CheckRecord
-	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="createUser", fetch = FetchType.LAZY)
 	private List<CheckRecord> checkRecordList;
 
 }

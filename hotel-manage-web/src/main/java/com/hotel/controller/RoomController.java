@@ -8,6 +8,7 @@ import com.hotel.manage.RoomManage;
 import com.hotel.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,5 +39,17 @@ public class RoomController extends BaseController {
     @ResponseBody
     public ResultVo<?> checkIn(@RequestBody CheckRecord checkRecord) {
         return ResultVo.success(checkRecordManage.checkIn(checkRecord));
+    }
+
+    @RequestMapping("enable/{id}")
+    @ResponseBody
+    public ResultVo<?> enable(@PathVariable("id") Long id) {
+        return ResultVo.success(roomManage.enable(id));
+    }
+
+    @RequestMapping("disable")
+    @ResponseBody
+    public ResultVo<?> disable(@PathVariable("id") Long id) {
+        return ResultVo.success(roomManage.disable(id));
     }
 }

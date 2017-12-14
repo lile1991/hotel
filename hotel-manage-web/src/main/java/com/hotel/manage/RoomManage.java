@@ -20,4 +20,12 @@ public class RoomManage {
     public List<Room> findAll(Room room) {
         return roomApi.findAll(room);
     }
+
+    public int enable(Long id) {
+        return roomApi.enable(id);
+    }
+
+    public int disable(Long id) {
+        return roomApi.disable(id);
+    }
 }
