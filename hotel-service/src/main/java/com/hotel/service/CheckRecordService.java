@@ -1,12 +1,14 @@
 package com.hotel.service;
 
 import com.hotel.dao.CheckRecordRepository;
+import com.hotel.dto.CheckRecordQueryDto;
 import com.hotel.entity.CheckRecord;
 import com.hotel.entity.Room;
 import com.hotel.enums.CheckStateEnum;
 import com.hotel.enums.RoomStateEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -22,6 +24,11 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
 
     @Autowired
     RoomService roomService;
+
+    @Transactional(readOnly = true)
+    public Page<CheckRecord> findManage(CheckRecordQueryDto queryDto) {
+        return findAll(queryDto.toPageable());
+    }
 
     @Transactional
     public CheckRecord checkIn(CheckRecord checkRecord) {

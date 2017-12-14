@@ -1,5 +1,6 @@
 package com.hotel.controller;
 
+import com.hotel.dto.CheckRecordQueryDto;
 import com.hotel.entity.CheckRecord;
 import com.hotel.entity.Customer;
 import com.hotel.entity.Room;
@@ -22,6 +23,13 @@ public class CheckRecordController extends BaseController {
 
     @Autowired
     CheckRecordManage checkRecordManage;
+
+
+    @RequestMapping("findManage")
+    @ResponseBody
+    public ResultVo<?> findManage(@RequestBody CheckRecordQueryDto queryDto) {
+        return ResultVo.success(checkRecordManage.findManage(queryDto));
+    }
 
     @PostMapping("checkIn")
     @ResponseBody

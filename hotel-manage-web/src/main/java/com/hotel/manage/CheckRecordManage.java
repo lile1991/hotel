@@ -1,10 +1,12 @@
 package com.hotel.manage;
 
 import com.hotel.api.CheckRecordApi;
+import com.hotel.dto.CheckRecordQueryDto;
 import com.hotel.entity.CheckRecord;
 import com.hotel.entity.User;
 import com.hotel.enums.CheckStateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -18,6 +20,10 @@ public class CheckRecordManage {
 
     @Autowired
     CommonManage commonManage;
+
+    public Page<CheckRecord> findManage(CheckRecordQueryDto queryDto) {
+        return checkRecordApi.findManage(queryDto);
+    }
 
     public CheckRecord checkIn(CheckRecord checkRecord) {
         Date now = new Date();

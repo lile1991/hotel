@@ -1,9 +1,13 @@
 package com.hotel.api;
 
+import com.hotel.dto.CheckRecordQueryDto;
 import com.hotel.entity.CheckRecord;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
 
 public interface CheckRecordApi {
-    @Transactional
+
+    Page<CheckRecord> findManage(CheckRecordQueryDto queryDto);
+
     CheckRecord checkIn(CheckRecord checkRecord);
+
 }
