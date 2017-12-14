@@ -44,12 +44,20 @@ public class RoomController extends BaseController {
     @RequestMapping("enable/{id}")
     @ResponseBody
     public ResultVo<?> enable(@PathVariable("id") Long id) {
-        return ResultVo.success(roomManage.enable(id));
+        int result = roomManage.enable(id);
+        if(result == 1) {
+            return ResultVo.success(result, "启用房间成功");
+        }
+        return ResultVo.fail(result, "启用房间失败");
     }
 
-    @RequestMapping("disable")
+    @RequestMapping("disable/{id}")
     @ResponseBody
     public ResultVo<?> disable(@PathVariable("id") Long id) {
-        return ResultVo.success(roomManage.disable(id));
+        int result = roomManage.disable(id);
+        if(result == 1) {
+            return ResultVo.success(result, "停用房间成功");
+        }
+        return ResultVo.fail(result, "停用房间失败");
     }
 }
