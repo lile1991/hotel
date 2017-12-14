@@ -4,5 +4,5 @@
 target/
 .settings/
 .project
+/RemoteSystemsTempFiles/
 /.metadata/
-**/node_modules/
