@@ -18,10 +18,9 @@ public class CheckRecord_ {
 	public static volatile SingularAttribute<CheckRecord, Long> payedDeposit;
 	public static volatile SingularAttribute<CheckRecord, String> state;
 	public static volatile SingularAttribute<CheckRecord, Date> updateTime;
-	public static volatile SingularAttribute<CheckRecord, User> user;
 	public static volatile SingularAttribute<CheckRecord, Room> room;
-	public static volatile SingularAttribute<CheckRecord, Long> createUserId;
-	public static volatile SingularAttribute<CheckRecord, Long> updateUserId;
+	public static volatile SingularAttribute<CheckRecord, User> createUser;
+	public static volatile SingularAttribute<CheckRecord, User> updateUser;
 	public static volatile SingularAttribute<CheckRecord, Customer> customer;
 	public static volatile ListAttribute<CheckRecord, CheckInCustomer> checkInCustomerList;
 }

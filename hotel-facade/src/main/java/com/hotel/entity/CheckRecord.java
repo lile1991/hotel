@@ -33,13 +33,6 @@ public class CheckRecord implements Serializable {
 	private Date checkOutTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
-
-	@Column(name="create_user_id")
-	private Long createUserId;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="over_time")
 	private Date overTime;
 
@@ -57,13 +50,6 @@ public class CheckRecord implements Serializable {
 
 	private String state;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
-
-	@Column(name="update_user_id")
-	private Long updateUserId;
-
 	//bi-directional many-to-one association to Customer
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="customer_id")
@@ -76,7 +62,19 @@ public class CheckRecord implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Room room;
 
-	//bi-directional many-to-one association to User
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="create_time")
+	private Date createTime;
+
 	@ManyToOne(fetch=FetchType.LAZY)
-	private User user;
+	@JoinColumn(name="create_user_id")
+	private User createUser;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="update_time")
+	private Date updateTime;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user_id")
+	private User updateUser;
 }

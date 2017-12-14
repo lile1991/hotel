@@ -5,5 +5,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface CheckRecordApi {
     @Transactional
-    Long checkIn(CheckRecord checkRecord);
+    CheckRecord checkIn(CheckRecord checkRecord);
 }

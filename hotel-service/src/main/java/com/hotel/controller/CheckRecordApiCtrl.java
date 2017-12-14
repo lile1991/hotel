@@ -13,7 +13,7 @@ public class CheckRecordApiCtrl implements CheckRecordApi {
     CheckRecordService checkRecordService;
 
     @Override
-    public Long checkIn(CheckRecord checkRecord) {
+    public CheckRecord checkIn(CheckRecord checkRecord) {
         return checkRecordService.checkIn(checkRecord);
     }
 }
