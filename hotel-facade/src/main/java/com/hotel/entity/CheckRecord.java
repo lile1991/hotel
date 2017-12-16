@@ -79,8 +79,8 @@ public class CheckRecord implements Serializable {
 	@JoinColumn(name="update_user_id")
 	private User updateUser;
 
-	@Transient
-	private String getStateDesc() {
+//	@Transient
+	public String getStateDesc() {
 		return state == null ? null : CheckStateEnum.valueOf(state).desc;
 	}
 }
