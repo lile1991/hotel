@@ -4,6 +4,8 @@ import com.hotel.dto.CheckRecordQueryDto;
 import com.hotel.entity.CheckRecord;
 import com.hotel.entity.Customer;
 import com.hotel.entity.Room;
+import com.hotel.enums.CheckStateEnum;
+import com.hotel.enums.EnumListConstant;
 import com.hotel.manage.CheckRecordManage;
 import com.hotel.vo.CheckInVo;
 import com.hotel.vo.ResultVo;
@@ -26,6 +28,11 @@ public class CheckRecordController extends BaseController {
     @ResponseBody
     public ResultVo<?> findManage(@RequestBody CheckRecordQueryDto queryDto) {
         return ResultVo.success(checkRecordManage.findManage(queryDto));
+    }
+
+    @RequestMapping("getCheckStateEnum")
+    public ResultVo<?> getCheckStateEnum() {
+        return ResultVo.success(EnumListConstant.getEnumEntryList(CheckStateEnum.class));
     }
 
     @PostMapping("checkIn")
