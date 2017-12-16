@@ -30,8 +30,9 @@ public class CheckRecordController extends BaseController {
         return ResultVo.success(checkRecordManage.findManage(queryDto));
     }
 
-    @RequestMapping("getCheckStateEnum")
-    public ResultVo<?> getCheckStateEnum() {
+    @RequestMapping("getCheckStateEnums")
+    @ResponseBody
+    public ResultVo<?> getCheckStateEnums() {
         return ResultVo.success(EnumListConstant.getEnumEntryList(CheckStateEnum.class));
     }
 
