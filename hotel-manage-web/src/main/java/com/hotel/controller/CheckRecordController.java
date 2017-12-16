@@ -10,10 +10,7 @@ import com.hotel.vo.ResultVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -50,5 +47,17 @@ public class CheckRecordController extends BaseController {
         }
 
         return ResultVo.success(checkRecordManage.checkIn(checkRecord), "登记入住成功");
+    }
+
+    @RequestMapping("reserveCheckIn/{id}")
+    @ResponseBody
+    public ResultVo<?> reserveCheckIn(@PathVariable("id") Long id) {
+        return ResultVo.success(checkRecordManage.reserveCheckIn(id), "预约入住成功");
+    }
+
+    @RequestMapping("leave/{id}")
+    @ResponseBody
+    public ResultVo<?> leave(@PathVariable("id") Long id) {
+        return ResultVo.success(checkRecordManage.leave(id), "退房成功");
     }
 }

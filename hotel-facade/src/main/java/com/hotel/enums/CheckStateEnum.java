@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum CheckStateEnum {
-    RESERVE("预定"), CHECK_IN("入住"), LEAVE("离店"), CANCEL("取消");
+    RESERVE("预定"), CANCELED_RESERVE("取消预定"), CHECK_IN("入住"), LEFT("退房");
 
     public final String desc;
 }

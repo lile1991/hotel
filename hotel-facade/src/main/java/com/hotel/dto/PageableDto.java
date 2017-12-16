@@ -10,6 +10,6 @@ public class PageableDto {
     private int size = 25;
 
     public Pageable toPageable() {
-        return new PageRequest(page, size);
+        return new PageRequest(page - 1, size);
     }
 }

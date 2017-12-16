@@ -9,5 +9,10 @@ public interface CheckRecordApi {
     Page<CheckRecord> findManage(CheckRecordQueryDto queryDto);
 
     CheckRecord checkIn(CheckRecord checkRecord);
+    int reserveCheckIn(CheckRecord checkRecord);
+
+    int leave(CheckRecord leaveCheckRecord);
+
+    CheckRecord findOne(Long id);
 
 }

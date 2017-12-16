@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class CommonManage {
 
     public Long currentUserId() {
-        return 0L;
+        return 1L;
     }
 
     public User currentUser() {

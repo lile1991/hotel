@@ -23,4 +23,19 @@ public class CheckRecordApiCtrl implements CheckRecordApi {
     public CheckRecord checkIn(CheckRecord checkRecord) {
         return checkRecordService.checkIn(checkRecord);
     }
+
+    @Override
+    public int reserveCheckIn(CheckRecord checkRecord) {
+        return checkRecordService.reserveCheckIn(checkRecord);
+    }
+
+    @Override
+    public int leave(CheckRecord leaveCheckRecord) {
+        return checkRecordService.leave(leaveCheckRecord);
+    }
+
+    @Override
+    public CheckRecord findOne(Long id) {
+        return checkRecordService.findOne(id);
+    }
 }

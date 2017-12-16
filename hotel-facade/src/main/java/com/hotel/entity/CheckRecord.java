@@ -1,5 +1,6 @@
 package com.hotel.entity;
 
+import com.hotel.enums.CheckStateEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -77,4 +78,9 @@ public class CheckRecord implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="update_user_id")
 	private User updateUser;
+
+	@Transient
+	private String getStateDesc() {
+		return state == null ? null : CheckStateEnum.valueOf(state).desc;
+	}
 }

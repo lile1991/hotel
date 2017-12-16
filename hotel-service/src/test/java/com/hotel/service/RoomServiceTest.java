@@ -54,9 +54,9 @@ public class RoomServiceTest {
                 room.setState(RoomStateEnum.EMPTY.name());
 
                 room.setCreateTime(now);
-                room.setCreateUserId(0L);
+                room.setCreateUserId(1L);
                 room.setUpdateTime(now);
-                room.setUpdateUserId(0L);
+                room.setUpdateUserId(1L);
                 roomService.save(room);
             }
         }
