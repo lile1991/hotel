@@ -63,6 +63,11 @@ public class CheckRecordController extends BaseController {
         return ResultVo.success(checkRecordManage.reserveCheckIn(id), "预约入住成功");
     }
 
+    /**
+     * 实扣押金、实收房费。。 处理人  加这几个字段。。
+     * @param id
+     * @return
+     */
     @RequestMapping("leave/{id}")
     @ResponseBody
     public ResultVo<?> leave(@PathVariable("id") Long id) {
