@@ -212,6 +212,13 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
         return 1;
     }
 
+    @Transactional(readOnly = true)
+    public CheckRecord findCheckOut(Long id) {
+        return findOne(((root, query, cb) -> {
+            root.fetch(CheckRecord_.room);
+            return cb.equal(root.get(CheckRecord_.id), id);
+        }));
+    }
 
     /**
      * 是否发生再此刻

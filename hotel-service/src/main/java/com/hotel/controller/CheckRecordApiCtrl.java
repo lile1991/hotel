@@ -38,4 +38,9 @@ public class CheckRecordApiCtrl implements CheckRecordApi {
     public CheckRecord findOne(Long id) {
         return checkRecordService.findOne(id);
     }
+
+    @Override
+    public CheckRecord findCheckOut(Long id) {
+        return checkRecordService.findCheckOut(id);
+    }
 }

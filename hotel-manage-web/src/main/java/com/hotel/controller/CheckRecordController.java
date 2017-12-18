@@ -23,6 +23,11 @@ public class CheckRecordController extends BaseController {
     @Autowired
     CheckRecordManage checkRecordManage;
 
+    @RequestMapping("findCheckOut/{id}")
+    @ResponseBody
+    public ResultVo<?> findOne(@PathVariable("id") Long id) {
+        return ResultVo.success(checkRecordManage.findCheckOut(id));
+    }
 
     @RequestMapping("findManage")
     @ResponseBody

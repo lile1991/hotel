@@ -71,8 +71,11 @@ public class CheckRecordManage {
         return checkRecordApi.leave(checkRecord);
     }
 
-    private CheckRecord findOne(Long id) {
+    public CheckRecord findOne(Long id) {
         return checkRecordApi.findOne(id);
     }
 
+    public CheckRecord findCheckOut(Long id) {
+        return checkRecordApi.findCheckOut(id);
+    }
 }

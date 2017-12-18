@@ -15,4 +15,5 @@ public interface CheckRecordApi {
 
     CheckRecord findOne(Long id);
 
+    CheckRecord findCheckOut(Long id);
 }
