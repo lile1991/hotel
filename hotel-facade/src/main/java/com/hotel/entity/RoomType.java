@@ -10,10 +10,11 @@ import java.util.List;
 
 
 /**
- * 房间类型
+ * The persistent class for the room_type database table.
+ * 
  */
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name="room_type")
 @NamedQuery(name="RoomType.findAll", query="SELECT r FROM RoomType r")
@@ -30,8 +31,10 @@ public class RoomType implements Serializable {
 	@Column(name="create_time")
 	private Date createTime;
 
-	@Column(name="create_user_id")
-	private Long createUserId;
+	//bi-directional many-to-one association to User
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="create_user_id")
+	private User createUser;
 
 	private Long deposit;
 
@@ -45,10 +48,15 @@ public class RoomType implements Serializable {
 	@Column(name="update_time")
 	private Date updateTime;
 
-	@Column(name="update_user_id")
-	private Long updateUserId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user_id")
+	private User updateUser;
 
 	//bi-directional many-to-one association to Room
 	@OneToMany(mappedBy="roomType")
-	private List<Room> roomList;
+	private List<Room> rooms;
+
+	public RoomType() {
+	}
+
 }

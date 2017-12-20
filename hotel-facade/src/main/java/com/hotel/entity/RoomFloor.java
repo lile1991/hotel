@@ -9,10 +9,11 @@ import java.util.List;
 
 
 /**
- * 楼层
+ * The persistent class for the room_floor database table.
+ * 
  */
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name="room_floor")
 @NamedQuery(name="RoomFloor.findAll", query="SELECT r FROM RoomFloor r")
@@ -20,13 +21,17 @@ public class RoomFloor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer floor;
 
 	private String alias;
 
 	//bi-directional many-to-one association to Room
-	@OneToMany(mappedBy="roomFloor", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="roomFloor")
 	private List<Room> roomList;
+
+	public RoomFloor() {
+	}
 
 	public Room addRoomList(Room roomList) {
 		getRoomList().add(roomList);

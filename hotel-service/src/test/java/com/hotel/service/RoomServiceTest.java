@@ -4,6 +4,7 @@ import com.hotel.HotelServiceApplication;
 import com.hotel.entity.Room;
 import com.hotel.entity.RoomFloor;
 import com.hotel.entity.RoomType;
+import com.hotel.entity.User;
 import com.hotel.enums.RoomStateEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,9 +55,12 @@ public class RoomServiceTest {
                 room.setState(RoomStateEnum.EMPTY.name());
 
                 room.setCreateTime(now);
-                room.setCreateUserId(1L);
+
+                User user = new User();
+                user.setId(1L);
+                room.setCreateUser(user);
                 room.setUpdateTime(now);
-                room.setUpdateUserId(1L);
+                room.setUpdateUser(user);
                 roomService.save(room);
             }
         }

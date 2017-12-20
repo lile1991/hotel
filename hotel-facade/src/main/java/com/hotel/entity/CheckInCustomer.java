@@ -4,48 +4,50 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
+
 /**
- * 入住客户
+ * The persistent class for the check_in_customer database table.
+ * 
  */
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name="check_in_customer")
 @NamedQuery(name="CheckInCustomer.findAll", query="SELECT c FROM CheckInCustomer c")
-public class CheckInCustomer {
-    private static final long serialVersionUID = 1L;
+public class CheckInCustomer implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_time")
-    private Date createTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="create_time")
+	private Date createTime;
 
-    @Column(name="create_user_id")
-    private Long createUserId;
+	//bi-directional many-to-one association to User
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="create_user_id")
+	private User createUser;
 
-    private String mobile;
+	@Column(name="id_card")
+	private String idCard;
 
-    @Column(name="id_card")
-    private String idCard;
+	private String mobile;
 
-    private String name;
+	private String name;
 
-    private String state;
+	private String state;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="update_time")
-    private Date updateTime;
+	//bi-directional many-to-one association to CheckInRecord
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="check_in_id")
+	private CheckInRecord checkInRecord;
 
-    @Column(name="update_user_id")
-    private Long updateUserId;
+	public CheckInCustomer() {
+	}
 
-    //bi-directional many-to-one association to CheckRecord
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="check_record_id")
-    private CheckRecord checkRecord;
 }

@@ -1,9 +1,9 @@
 package com.hotel.service;
 
-import com.hotel.dao.CheckRecordRepository;
-import com.hotel.dto.CheckRecordQueryDto;
-import com.hotel.entity.CheckRecord;
-import com.hotel.entity.CheckRecord_;
+import com.hotel.dao.CheckInRecordRepository;
+import com.hotel.dto.CheckInRecordQueryDto;
+import com.hotel.entity.CheckInRecord;
+import com.hotel.entity.CheckInRecord_;
 import com.hotel.entity.Room;
 import com.hotel.enums.CheckStateEnum;
 import com.hotel.enums.RoomStateEnum;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class CheckRecordService extends BaseService<CheckRecord, Long, CheckRecordRepository> {
+public class CheckInRecordService extends BaseService<CheckInRecord, Long, CheckInRecordRepository> {
 
     @Autowired
     RoomService roomService;
@@ -31,16 +31,16 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
     OptLogService optLogService;
 
     @Transactional(readOnly = true)
-    public Page<CheckRecord> findManage(CheckRecordQueryDto queryDto) {
+    public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
         return findAll((root, query, cb) -> {
-            root.fetch(CheckRecord_.room);
-            root.fetch(CheckRecord_.createUser);
+            root.fetch(CheckInRecord_.room);
+            root.fetch(CheckInRecord_.createUser);
             return null;
         }, queryDto.toPageable());
     }
 
     @Transactional
-    public CheckRecord checkIn(CheckRecord checkRecord) {
+    public CheckInRecord checkIn(CheckInRecord checkRecord) {
         Room room = roomService.findOne(checkRecord.getRoom().getId());
 
         RoomStateEnum roomStateEnum = RoomStateEnum.valueOf(room.getState());
@@ -53,7 +53,7 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
         // 入住时间小于等于当前时间
         if(checkRecord.getCheckInTime().getTime() <= System.currentTimeMillis()) {
             // 离店时间大于当前时间
-            if(checkRecord.getCheckOutTime().getTime() > System.currentTimeMillis()) {
+            if(checkRecord.getOverTime().getTime() > System.currentTimeMillis()) {
                 // 入住
                 checkRecord.setState(CheckStateEnum.CHECK_IN.name());
             } else {
@@ -75,33 +75,33 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
     }
 
     @Transactional
-    public int reserveCheckIn(CheckRecord checkRecord) {
-        CheckRecord reserveCheckRecord = findOne(checkRecord.getId());
-        Assert.notNull(reserveCheckRecord, "预约不存在");
+    public int reserveCheckIn(CheckInRecord checkRecord) {
+        CheckInRecord reserveCheckInRecord = findOne(checkRecord.getId());
+        Assert.notNull(reserveCheckInRecord, "预约不存在");
 
-        Assert.isTrue(isCurrentTime(reserveCheckRecord.getCheckInTime(), reserveCheckRecord.getCheckOutTime(), - 30 * 60 * 1000), "未到入住时间");
+        Assert.isTrue(isCurrentTime(reserveCheckInRecord.getCheckInTime(), reserveCheckInRecord.getOverTime(), - 30 * 60 * 1000), "未到入住时间");
 
-        reserveCheckRecord.setState(CheckStateEnum.CHECK_IN.name());
-        reserveCheckRecord.setUpdateTime(checkRecord.getUpdateTime());
-        reserveCheckRecord.setUpdateUser(checkRecord.getUpdateUser());
-        save(reserveCheckRecord);
+        reserveCheckInRecord.setState(CheckStateEnum.CHECK_IN.name());
+        reserveCheckInRecord.setUpdateTime(checkRecord.getUpdateTime());
+        reserveCheckInRecord.setUpdateUser(checkRecord.getUpdateUser());
+        save(reserveCheckInRecord);
 
         changeState(checkRecord);
         return 1;
     }
 
     @Transactional(readOnly = true)
-    public void validCheckInTime(CheckRecord checkRecord) {
+    public void validCheckInTime(CheckInRecord checkRecord) {
         final Date checkInTime = checkRecord.getCheckInTime();
-        final Date checkOutTime = checkRecord.getCheckOutTime();
+        final Date overTime = checkRecord.getOverTime();
         Assert.notNull(checkInTime, "请选择入住时间");
-        Assert.notNull(checkOutTime, "请选择离店时间");
+        Assert.notNull(overTime, "请选择到期时间");
 
-        List<CheckRecord> checkRecordList = findByCheckInTimeGreaterThanEqual(checkRecord.getRoom().getId(), checkInTime);
+        List<CheckInRecord> checkRecordList = findByCheckInTimeGreaterThanEqual(checkRecord.getRoom().getId(), checkInTime);
         if (! CollectionUtils.isEmpty(checkRecordList)) {
-            for (CheckRecord dbRecord: checkRecordList) {
-                if(checkRecord.getCheckOutTime().getTime() < dbRecord.getCheckInTime().getTime()
-                        || checkRecord.getCheckInTime().getTime() >= dbRecord.getCheckOutTime().getTime()) {
+            for (CheckInRecord dbRecord: checkRecordList) {
+                if(checkRecord.getOverTime().getTime() < dbRecord.getCheckInTime().getTime()
+                        || checkRecord.getCheckInTime().getTime() >= dbRecord.getOverTime().getTime()) {
                     if(log.isDebugEnabled()) {
                         // logger
                     }
@@ -112,7 +112,7 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
                             String.format(
                                 "入住时间冲突, 该房间%s-%s段已有人预定",
                                 simpleDateFormat.format(dbRecord.getCheckInTime()),
-                                simpleDateFormat.format(dbRecord.getCheckOutTime())
+                                simpleDateFormat.format(dbRecord.getOverTime())
                             )
                     );
                 }
@@ -122,7 +122,7 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
     }
 
     @Transactional(readOnly = true)
-    public List<CheckRecord> findByCheckInTimeGreaterThanEqual(Long roomId, Date checkInTime) {
+    public List<CheckInRecord> findByCheckInTimeGreaterThanEqual(Long roomId, Date checkInTime) {
         return repository.findByRoomIdAndCheckInTimeGreaterThanEqual(roomId, checkInTime);
     }
 
@@ -137,7 +137,7 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
     }
 
     @Transactional
-    public int changeState(CheckRecord checkRecord) {
+    public int changeState(CheckInRecord checkRecord) {
         // 查找房间
         Room room = roomService.findOne(checkRecord.getRoom().getId());
         // 当前房间状态
@@ -180,11 +180,11 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
     }
 
     @Transient
-    public int leave(CheckRecord leaveCheckRecord) {
-        CheckRecord curCheckRecord = findOne(leaveCheckRecord.getId());
-        Assert.notNull(curCheckRecord, "入住记录不存在");
+    public int leave(CheckInRecord leaveCheckInRecord) {
+        CheckInRecord curCheckInRecord = findOne(leaveCheckInRecord.getId());
+        Assert.notNull(curCheckInRecord, "入住记录不存在");
 
-        CheckStateEnum checkStateEnum = CheckStateEnum.valueOf(curCheckRecord.getState());
+        CheckStateEnum checkStateEnum = CheckStateEnum.valueOf(curCheckInRecord.getState());
         CheckStateEnum newCheckStateEnum;
         switch (checkStateEnum) {
             // 入住中
@@ -201,22 +201,22 @@ public class CheckRecordService extends BaseService<CheckRecord, Long, CheckReco
                 throw new IllegalStateException("重复的操作， 已取消预定或已退房");
         }
 
-        curCheckRecord.setState(newCheckStateEnum.name());
-        curCheckRecord.setUpdateUser(leaveCheckRecord.getUpdateUser());
-        curCheckRecord.setUpdateTime(leaveCheckRecord.getUpdateTime());
+        curCheckInRecord.setState(newCheckStateEnum.name());
+        curCheckInRecord.setUpdateUser(leaveCheckInRecord.getUpdateUser());
+        curCheckInRecord.setUpdateTime(leaveCheckInRecord.getUpdateTime());
 
         // 更新入住状态
-        save(curCheckRecord);
+        save(curCheckInRecord);
         // 更新房间状态
-        changeState(curCheckRecord);
+        changeState(curCheckInRecord);
         return 1;
     }
 
     @Transactional(readOnly = true)
-    public CheckRecord findCheckOut(Long id) {
+    public CheckInRecord findCheckOut(Long id) {
         return findOne(((root, query, cb) -> {
-            root.fetch(CheckRecord_.room);
-            return cb.equal(root.get(CheckRecord_.id), id);
+            root.fetch(CheckInRecord_.room);
+            return cb.equal(root.get(CheckInRecord_.id), id);
         }));
     }
 

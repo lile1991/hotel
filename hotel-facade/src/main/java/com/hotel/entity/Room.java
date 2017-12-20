@@ -1,6 +1,5 @@
 package com.hotel.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,8 @@ import java.util.List;
 
 
 /**
- * 房间
+ * The persistent class for the room database table.
+ * 
  */
 @Getter
 @Setter
@@ -32,12 +32,14 @@ public class Room implements Serializable {
 	@Column(name="create_time")
 	private Date createTime;
 
-	@Column(name="create_user_id")
-	private Long createUserId;
+	//bi-directional many-to-one association to User
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="create_user_id")
+	private User createUser;
 
 	private Long deposit;
 
-	private Integer number;
+	private int number;
 
 	private String state;
 
@@ -45,12 +47,9 @@ public class Room implements Serializable {
 	@Column(name="update_time")
 	private Date updateTime;
 
-	@Column(name="update_user_id")
-	private Long updateUserId;
-
-	//bi-directional many-to-one association to CheckRecord
-	@OneToMany(mappedBy="room", fetch = FetchType.LAZY)
-	private List<CheckRecord> checkRecordList;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user_id")
+	private User updateUser;
 
 	//bi-directional many-to-one association to RoomFloor
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -59,22 +58,32 @@ public class Room implements Serializable {
 
 	//bi-directional many-to-one association to RoomType
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="type_id")
+	@JoinColumn(name="type")
 	private RoomType roomType;
 
+	//bi-directional many-to-one association to CheckInRecord
+	@OneToMany(mappedBy="room")
+	private List<CheckInRecord> checkInRecords;
 
-	public CheckRecord addCheckRecordList(CheckRecord checkRecordList) {
-		getCheckRecordList().add(checkRecordList);
-		checkRecordList.setRoom(this);
-
-		return checkRecordList;
+	public Room() {
 	}
 
-	public CheckRecord removeCheckRecordList(CheckRecord checkRecordList) {
-		getCheckRecordList().remove(checkRecordList);
-		checkRecordList.setRoom(null);
+	public void setCheckInRecords(List<CheckInRecord> checkInRecords) {
+		this.checkInRecords = checkInRecords;
+	}
 
-		return checkRecordList;
+	public CheckInRecord addCheckInRecord(CheckInRecord checkInRecord) {
+		getCheckInRecords().add(checkInRecord);
+		checkInRecord.setRoom(this);
+
+		return checkInRecord;
+	}
+
+	public CheckInRecord removeCheckInRecord(CheckInRecord checkInRecord) {
+		getCheckInRecords().remove(checkInRecord);
+		checkInRecord.setRoom(null);
+
+		return checkInRecord;
 	}
 
 }

@@ -8,5 +8,9 @@
 		<class>com.hotel.entity.RoomFloor</class>
 		<class>com.hotel.entity.RoomType</class>
 		<class>com.hotel.entity.User</class>
+		<class>com.hotel.entity.CheckInCustomer</class>
+		<class>com.hotel.entity.CheckInRecord</class>
+		<class>com.hotel.entity.CheckOutRecord</class>
+		<class>com.hotel.entity.Member</class>
 	</persistence-unit>
 </persistence>

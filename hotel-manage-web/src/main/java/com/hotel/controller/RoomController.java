@@ -1,9 +1,9 @@
 package com.hotel.controller;
 
 import com.hotel.dto.RoomQueryDto;
-import com.hotel.entity.CheckRecord;
+import com.hotel.entity.CheckInRecord;
 import com.hotel.entity.Room;
-import com.hotel.manage.CheckRecordManage;
+import com.hotel.manage.CheckInRecordManage;
 import com.hotel.manage.RoomManage;
 import com.hotel.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class RoomController extends BaseController {
     RoomManage roomManage;
 
     @Autowired
-    CheckRecordManage checkRecordManage;
+    CheckInRecordManage checkInRecordManage;
 
     @RequestMapping("findManage")
     @ResponseBody
@@ -37,8 +37,8 @@ public class RoomController extends BaseController {
 
     @RequestMapping("checkIn")
     @ResponseBody
-    public ResultVo<?> checkIn(@RequestBody CheckRecord checkRecord) {
-        return ResultVo.success(checkRecordManage.checkIn(checkRecord));
+    public ResultVo<?> checkIn(@RequestBody CheckInRecord checkInRecord) {
+        return ResultVo.success(checkInRecordManage.checkIn(checkInRecord));
     }
 
     @RequestMapping("enable/{id}")

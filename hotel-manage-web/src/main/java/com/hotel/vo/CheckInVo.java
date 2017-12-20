@@ -17,7 +17,7 @@ public class CheckInVo {
     @NotNull
     private Long payedDeposit;
 
-    private Long customerId;
+    private Long memberId;
     @NotNull
     private Long roomId;
 

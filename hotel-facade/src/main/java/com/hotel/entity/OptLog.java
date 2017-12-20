@@ -9,7 +9,8 @@ import java.util.Date;
 
 
 /**
- * 操作日志
+ * The persistent class for the opt_log database table.
+ * 
  */
 @Getter
 @Setter
@@ -27,8 +28,10 @@ public class OptLog implements Serializable {
 	@Column(name="create_time")
 	private Date createTime;
 
-	@Column(name="create_user_id")
-	private Long createUserId;
+	//bi-directional many-to-one association to User
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="create_user_id")
+	private User createUser;
 
 	@Column(name="opt_data")
 	private String optData;
@@ -38,5 +41,8 @@ public class OptLog implements Serializable {
 
 	@Column(name="opt_type")
 	private String optType;
+
+	public OptLog() {
+	}
 
 }
