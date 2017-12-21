@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RoomTypeApi {
     List<RoomType> findAll();
+
+    RoomType findOne(Integer id);
 }

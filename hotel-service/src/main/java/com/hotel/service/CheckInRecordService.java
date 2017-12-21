@@ -30,6 +30,9 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
     @Autowired
     OptLogService optLogService;
 
+    @Autowired
+    CheckInCustomerService checkInCustomerService;
+
     @Transactional(readOnly = true)
     public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
         return findAll((root, query, cb) -> {
@@ -40,38 +43,52 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
     }
 
     @Transactional
-    public CheckInRecord checkIn(CheckInRecord checkRecord) {
-        Room room = roomService.findOne(checkRecord.getRoom().getId());
+    public CheckInRecord checkIn(CheckInRecord checkInRecord) {
+        Room room = roomService.findOne(checkInRecord.getRoom().getId());
 
         RoomStateEnum roomStateEnum = RoomStateEnum.valueOf(room.getState());
         if(RoomStateEnum.RESERVE == roomStateEnum) {
-            validCheckInTime(checkRecord);
+            validCheckInTime(checkInRecord);
         } else {
             Assert.isTrue(roomStateEnum == RoomStateEnum.EMPTY, "房间已" + roomStateEnum.desc);
         }
 
         // 入住时间小于等于当前时间
-        if(checkRecord.getCheckInTime().getTime() <= System.currentTimeMillis()) {
+        if(checkInRecord.getCheckInTime().getTime() <= System.currentTimeMillis()) {
             // 离店时间大于当前时间
-            if(checkRecord.getOverTime().getTime() > System.currentTimeMillis()) {
+            if(checkInRecord.getOverTime().getTime() > System.currentTimeMillis()) {
                 // 入住
-                checkRecord.setState(CheckStateEnum.CHECK_IN.name());
+                checkInRecord.setState(CheckStateEnum.CHECK_IN.name());
             } else {
                 // 离店
-                checkRecord.setState(CheckStateEnum.LEFT.name());
+                checkInRecord.setState(CheckStateEnum.LEFT.name());
             }
         } else {
             // 预定
-            checkRecord.setState(CheckStateEnum.RESERVE.name());
+            checkInRecord.setState(CheckStateEnum.RESERVE.name());
         }
 
         // 先更新入住登记的状态
-        checkRecord = save(checkRecord);
+        final CheckInRecord dbCheckInRecord = save(checkInRecord);
+
+        // 保存入住客户
+        checkInRecord.getCheckInCustomers().forEach(checkInCustomer -> {
+            if(checkInCustomer.getMobile() == null) {
+                checkInCustomer.setMobile("");
+            }
+
+            checkInCustomer.setState("0");
+            checkInCustomer.setCreateTime(dbCheckInRecord.getCreateTime());
+            checkInCustomer.setCreateUser(dbCheckInRecord.getCreateUser());
+
+            checkInCustomer.setCheckInRecord(dbCheckInRecord);
+        });
+        checkInCustomerService.save(checkInRecord.getCheckInCustomers());
 
         // 再更新房间状态, 顺序不可颠倒
-        changeState(checkRecord);
+        changeState(dbCheckInRecord);
 
-        return checkRecord;
+        return dbCheckInRecord;
     }
 
     @Transactional

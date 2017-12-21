@@ -1,6 +1,7 @@
 package com.hotel.manage;
 
 import com.hotel.api.RoomApi;
+import com.hotel.api.RoomTypeApi;
 import com.hotel.dto.RoomQueryDto;
 import com.hotel.entity.Room;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import java.util.List;
 public class RoomManage {
     @Autowired
     RoomApi roomApi;
+
+    @Autowired
+    RoomTypeApi roomTypeApi;
 
     public List<Room> findManage(RoomQueryDto roomQueryDto) {
         return roomApi.findManage(roomQueryDto);
@@ -27,5 +31,9 @@ public class RoomManage {
 
     public int disable(Long id) {
         return roomApi.disable(id);
+    }
+
+    public Room findCheckIn(Long id) {
+        return roomApi.findCheckIn(id);
     }
 }

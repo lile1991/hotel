@@ -1,12 +1,15 @@
 package com.hotel.controller;
 
+import com.hotel.constant.SystemConstant;
 import com.hotel.dto.CheckInRecordQueryDto;
+import com.hotel.entity.CheckInCustomer;
 import com.hotel.entity.CheckInRecord;
 import com.hotel.entity.Member;
 import com.hotel.entity.Room;
 import com.hotel.enums.CheckStateEnum;
 import com.hotel.enums.EnumListConstant;
 import com.hotel.manage.CheckInRecordManage;
+import com.hotel.vo.CheckInCustomerVo;
 import com.hotel.vo.CheckInVo;
 import com.hotel.vo.ResultVo;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("checkInRecord")
@@ -45,15 +50,24 @@ public class CheckInRecordController extends BaseController {
         room.setId(checkInVo.getRoomId());
         checkInRecord.setRoom(room);
 
-        Long memberId = checkInVo.getMemberId();
-
-        if(memberId != null) {
-            Member member = new Member();
-            member.setId(memberId);
-            checkInRecord.setMember(member);
+        long memberId = SystemConstant.getId(checkInVo.getMemberId());
+        if(SystemConstant.isNullId(memberId)) {
+            // TODO 校验会员是否存在
         }
+        Member member = new Member();
+        member.setId(memberId);
+        checkInRecord.setMember(member);
 
-        return ResultVo.success(checkInRecordManage.checkIn(checkInRecord), "登记入住成功");
+        List<CheckInCustomerVo> checkInCustomers = checkInVo.getCheckInCustomers();
+        checkInRecord.setCheckInCustomers(checkInCustomers.stream().map(vo -> {
+            CheckInCustomer checkInCustomer = new CheckInCustomer();
+            checkInCustomer.setIdCard(vo.getIdCard());
+            checkInCustomer.setMobile(vo.getMobile());
+            checkInCustomer.setName(vo.getName());
+            return checkInCustomer;
+        }).collect(Collectors.toList()));
+
+        return ResultVo.success(checkInRecordManage.checkIn(checkInRecord).getId(), "登记入住成功");
     }
 
     @RequestMapping("reserveCheckIn/{id}")

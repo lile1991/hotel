@@ -39,7 +39,7 @@ public class Room implements Serializable {
 
 	private Long deposit;
 
-	private int number;
+	private Integer number;
 
 	private String state;
 

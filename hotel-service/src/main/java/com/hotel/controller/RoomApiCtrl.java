@@ -34,4 +34,14 @@ public class RoomApiCtrl implements RoomApi {
     public int disable(Long id) {
         return roomService.disable(id);
     }
+
+    @Override
+    public Room findOne(Long id) {
+        return roomService.findOne(id);
+    }
+
+    @Override
+    public Room findCheckIn(Long id) {
+        return roomService.findCheckIn(id);
+    }
 }

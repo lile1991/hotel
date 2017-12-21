@@ -23,4 +23,9 @@ public class RoomTypeApiCtrl implements RoomTypeApi {
         List<RoomType> list = roomTypeService.findAll(new Sort(Sort.Direction.ASC, RoomType_.id.getName()));
         return list;
     }
+
+    @Override
+    public RoomType findOne(Integer id) {
+        return roomTypeService.findOne(id);
+    }
 }

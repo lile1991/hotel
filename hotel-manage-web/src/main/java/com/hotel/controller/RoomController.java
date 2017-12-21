@@ -1,7 +1,6 @@
 package com.hotel.controller;
 
 import com.hotel.dto.RoomQueryDto;
-import com.hotel.entity.CheckInRecord;
 import com.hotel.entity.Room;
 import com.hotel.manage.CheckInRecordManage;
 import com.hotel.manage.RoomManage;
@@ -29,16 +28,21 @@ public class RoomController extends BaseController {
         return ResultVo.success(roomManage.findManage(roomQueryDto));
     }
 
+    /**
+     * 从入住页面获取房间数据， 级联房间类型
+     * @param id 房间ID
+     * @return Room
+     */
+    @RequestMapping("findCheckIn/{id}")
+    @ResponseBody
+    public ResultVo<?> findCheckIn(@PathVariable("id") Long id) {
+        return ResultVo.success(roomManage.findCheckIn(id));
+    }
+
     @RequestMapping("findAll")
     @ResponseBody
     public ResultVo<?> findAll(@RequestBody Room room) {
         return ResultVo.success(roomManage.findAll(room));
-    }
-
-    @RequestMapping("checkIn")
-    @ResponseBody
-    public ResultVo<?> checkIn(@RequestBody CheckInRecord checkInRecord) {
-        return ResultVo.success(checkInRecordManage.checkIn(checkInRecord));
     }
 
     @RequestMapping("enable/{id}")

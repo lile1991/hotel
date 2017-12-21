@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +39,10 @@ public class CheckInRecord implements Serializable {
 	private Date overTime;
 
 	@Column(name="payed_charge")
-	private BigInteger payedCharge;
+	private Long payedCharge;
 
 	@Column(name="payed_deposit")
-	private BigInteger payedDeposit;
+	private Long payedDeposit;
 
 	private String state;
 
@@ -79,14 +79,20 @@ public class CheckInRecord implements Serializable {
 	}
 
 	public CheckInCustomer addCheckInCustomer(CheckInCustomer checkInCustomer) {
-		getCheckInCustomers().add(checkInCustomer);
+		if(checkInCustomers == null) {
+			checkInCustomers = new ArrayList<>();
+		}
+		checkInCustomers.add(checkInCustomer);
 		checkInCustomer.setCheckInRecord(this);
 
 		return checkInCustomer;
 	}
 
 	public CheckInCustomer removeCheckInCustomer(CheckInCustomer checkInCustomer) {
-		getCheckInCustomers().remove(checkInCustomer);
+		if(checkInCustomers == null) {
+			return null;
+		}
+		checkInCustomers.remove(checkInCustomer);
 		checkInCustomer.setCheckInRecord(null);
 
 		return checkInCustomer;

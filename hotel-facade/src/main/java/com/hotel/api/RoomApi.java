@@ -13,4 +13,8 @@ public interface RoomApi {
     int enable(Long id);
 
     int disable(Long id);
+
+    Room findOne(Long id);
+
+    Room findCheckIn(Long id);
 }
