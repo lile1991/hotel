@@ -32,8 +32,4 @@ public class RoomManage {
     public int disable(Long id) {
         return roomApi.disable(id);
     }
-
-    public Room findCheckIn(Long id) {
-        return roomApi.findCheckIn(id);
-    }
 }

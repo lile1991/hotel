@@ -16,5 +16,4 @@ public interface RoomApi {
 
     Room findOne(Long id);
 
-    Room findCheckIn(Long id);
 }

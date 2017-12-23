@@ -40,8 +40,4 @@ public class RoomApiCtrl implements RoomApi {
         return roomService.findOne(id);
     }
 
-    @Override
-    public Room findCheckIn(Long id) {
-        return roomService.findCheckIn(id);
-    }
 }

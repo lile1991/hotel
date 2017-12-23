@@ -28,17 +28,6 @@ public class RoomController extends BaseController {
         return ResultVo.success(roomManage.findManage(roomQueryDto));
     }
 
-    /**
-     * 从入住页面获取房间数据， 级联房间类型
-     * @param id 房间ID
-     * @return Room
-     */
-    @RequestMapping("findCheckIn/{id}")
-    @ResponseBody
-    public ResultVo<?> findCheckIn(@PathVariable("id") Long id) {
-        return ResultVo.success(roomManage.findCheckIn(id));
-    }
-
     @RequestMapping("findAll")
     @ResponseBody
     public ResultVo<?> findAll(@RequestBody Room room) {
