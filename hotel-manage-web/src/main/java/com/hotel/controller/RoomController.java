@@ -34,6 +34,12 @@ public class RoomController extends BaseController {
         return ResultVo.success(roomManage.findAll(room));
     }
 
+    @RequestMapping("findOne/{id}")
+    @ResponseBody
+    public ResultVo<?> findAll(@PathVariable("id") Long id) {
+        return ResultVo.success(roomManage.findOne(id));
+    }
+
     @RequestMapping("enable/{id}")
     @ResponseBody
     public ResultVo<?> enable(@PathVariable("id") Long id) {

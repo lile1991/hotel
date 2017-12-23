@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 
 
@@ -32,7 +31,8 @@ public class CheckOutRecord implements Serializable {
 	@Column(name="create_time")
 	private Date createTime;
 
-	private BigInteger deductDeposit;
+	@Column(name = "deduct_deposit")
+	private Long deductDeposit;
 
 	private String remark;
 
@@ -43,16 +43,20 @@ public class CheckOutRecord implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="update_user_id")
 	private User updateUser;
+	@Column(name="update_user_id")
+	private Long updateUserId;
 
 	//bi-directional one-to-one association to CheckInRecord
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id")
+	@JoinColumn(name="id", insertable = false, updatable = false)
 	private CheckInRecord checkInRecord;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="create_user_id")
+	@JoinColumn(name="create_user_id", insertable = false, updatable = false)
 	private User createUser;
+	@Column(name="create_user_id")
+	private Long createUserId;
 
 	public CheckOutRecord() {
 	}

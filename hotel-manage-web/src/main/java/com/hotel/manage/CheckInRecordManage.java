@@ -3,7 +3,7 @@ package com.hotel.manage;
 import com.hotel.api.CheckInRecordApi;
 import com.hotel.dto.CheckInRecordQueryDto;
 import com.hotel.entity.CheckInRecord;
-import com.hotel.entity.User;
+import com.hotel.entity.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -16,6 +16,9 @@ public class CheckInRecordManage {
 
     @Autowired
     CheckInRecordApi checkInRecordApi;
+
+    @Autowired
+    RoomManage roomManage;
 
     @Autowired
     CommonManage commonManage;
@@ -31,14 +34,14 @@ public class CheckInRecordManage {
      */
     public CheckInRecord checkIn(CheckInRecord checkRecord) {
         Date now = new Date();
-        User user = commonManage.currentUser();
+        Long userId = commonManage.currentUserId();
 
         Assert.isTrue(checkRecord.getCheckInTime().getTime() < checkRecord.getOverTime().getTime(), "到期时间不能大于入住时间");
 
         checkRecord.setCreateTime(now);
         checkRecord.setUpdateTime(now);
-        checkRecord.setUpdateUser(user);
-        checkRecord.setCreateUser(user);
+        checkRecord.setUpdateUserId(userId);
+        checkRecord.setCreateUserId(userId);
 
         return checkInRecordApi.checkIn(checkRecord);
     }
@@ -53,11 +56,18 @@ public class CheckInRecordManage {
         CheckInRecord checkRecord = new CheckInRecord();
         checkRecord.setId(id);
         checkRecord.setUpdateTime(now);
-        checkRecord.setUpdateUser(commonManage.currentUser());
+        checkRecord.setUpdateUserId(commonManage.currentUserId());
         return checkInRecordApi.reserveCheckIn(checkRecord);
     }
 
     public CheckInRecord findOne(Long id) {
         return checkInRecordApi.findOne(id);
+    }
+
+    public CheckInRecord findFromCheckOut(Long id) {
+        CheckInRecord checkInRecord = checkInRecordApi.findOne(id);
+        Room room = roomManage.findOne(checkInRecord.getRoomId());
+        checkInRecord.setRoom(room);
+        return checkInRecord;
     }
 }

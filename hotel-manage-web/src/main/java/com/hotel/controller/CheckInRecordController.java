@@ -4,8 +4,6 @@ import com.hotel.constant.SystemConstant;
 import com.hotel.dto.CheckInRecordQueryDto;
 import com.hotel.entity.CheckInCustomer;
 import com.hotel.entity.CheckInRecord;
-import com.hotel.entity.Member;
-import com.hotel.entity.Room;
 import com.hotel.enums.CheckStateEnum;
 import com.hotel.enums.EnumListConstant;
 import com.hotel.manage.CheckInRecordManage;
@@ -34,6 +32,18 @@ public class CheckInRecordController extends BaseController {
         return ResultVo.success(checkInRecordManage.findManage(queryDto));
     }
 
+    @RequestMapping("findOne/{id}")
+    @ResponseBody
+    public ResultVo<?> findOne(@PathVariable("id") Long id) {
+        return ResultVo.success(checkInRecordManage.findOne(id));
+    }
+
+    @RequestMapping("findFromCheckOut/{id}")
+    @ResponseBody
+    public ResultVo<?> findFromCheckOut(@PathVariable("id") Long id) {
+        return ResultVo.success(checkInRecordManage.findFromCheckOut(id));
+    }
+
     @RequestMapping("getCheckStateEnums")
     @ResponseBody
     public ResultVo<?> getCheckStateEnums() {
@@ -46,17 +56,10 @@ public class CheckInRecordController extends BaseController {
         CheckInRecord checkInRecord = new CheckInRecord();
         BeanUtils.copyProperties(checkInVo, checkInRecord);
 
-        Room room = new Room();
-        room.setId(checkInVo.getRoomId());
-        checkInRecord.setRoom(room);
-
         long memberId = SystemConstant.getId(checkInVo.getMemberId());
         if(SystemConstant.isNullId(memberId)) {
             // TODO 校验会员是否存在
         }
-        Member member = new Member();
-        member.setId(memberId);
-        checkInRecord.setMember(member);
 
         List<CheckInCustomerVo> checkInCustomers = checkInVo.getCheckInCustomers();
         checkInRecord.setCheckInCustomers(checkInCustomers.stream().map(vo -> {

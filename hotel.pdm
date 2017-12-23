@@ -3066,7 +3066,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <o:Column Id="o115">
 <a:ObjectID>9AE34221-A08E-41DF-B94C-A785E6B9152F</a:ObjectID>
 <a:Name>扣除押金</a:Name>
-<a:Code>deductDeposit</a:Code>
+<a:Code>deduct_deposit</a:Code>
 <a:CreationDate>1513600956</a:CreationDate>
 <a:Creator>DELL</a:Creator>
 <a:ModificationDate>1513685577</a:ModificationDate>

@@ -23,5 +23,6 @@ public class CheckInRecord_ {
 	public static volatile SingularAttribute<CheckInRecord, Member> member;
 	public static volatile SingularAttribute<CheckInRecord, User> createUser;
 	public static volatile SingularAttribute<CheckInRecord, Room> room;
+	public static volatile SingularAttribute<CheckInRecord, Long> roomId;
 	public static volatile SingularAttribute<CheckInRecord, CheckOutRecord> checkOutRecord;
 }

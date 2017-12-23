@@ -34,8 +34,10 @@ public class Room implements Serializable {
 
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="create_user_id")
+	@JoinColumn(name="create_user_id", insertable = false, updatable = false)
 	private User createUser;
+	@Column(name = "create_user_id")
+	private Long createUserId;
 
 	private Long deposit;
 
@@ -48,8 +50,10 @@ public class Room implements Serializable {
 	private Date updateTime;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="update_user_id")
+	@JoinColumn(name="update_user_id", insertable = false, updatable = false)
 	private User updateUser;
+	@Column(name = "update_user_id")
+	private Long updateUserId;
 
 	//bi-directional many-to-one association to RoomFloor
 	@ManyToOne(fetch=FetchType.LAZY)

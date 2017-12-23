@@ -1,11 +1,11 @@
 package com.hotel.entity;
 
+import com.hotel.enums.CheckStateEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,13 +46,19 @@ public class CheckInRecord implements Serializable {
 
 	private String state;
 
+	public String getStateDesc() {
+		return CheckStateEnum.valueOf(state).getDesc();
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
 	private Date updateTime;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="update_user_id")
+	@JoinColumn(name="update_user_id", insertable = false, updatable = false)
 	private User updateUser;
+	@Column(name = "update_user_id")
+	private Long updateUserId;
 
 	//bi-directional many-to-one association to CheckInCustomer
 	@OneToMany(mappedBy="checkInRecord")
@@ -60,16 +66,24 @@ public class CheckInRecord implements Serializable {
 
 	//bi-directional many-to-one association to Member
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "member_id", insertable = false, updatable = false)
 	private Member member;
+	@Column(name = "member_id")
+	private Long memberId;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="create_user_id")
+	@JoinColumn(name="create_user_id", insertable = false, updatable = false)
 	private User createUser;
+	@Column(name = "create_user_id")
+	private Long createUserId;
 
 	//bi-directional many-to-one association to Room
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "room_id", insertable = false, updatable = false)
 	private Room room;
+	@Column(name = "room_id")
+	private Long roomId;
 
 	//bi-directional one-to-one association to CheckOutRecord
 	@OneToOne(mappedBy="checkInRecord", fetch=FetchType.LAZY)
@@ -77,25 +91,4 @@ public class CheckInRecord implements Serializable {
 
 	public CheckInRecord() {
 	}
-
-	public CheckInCustomer addCheckInCustomer(CheckInCustomer checkInCustomer) {
-		if(checkInCustomers == null) {
-			checkInCustomers = new ArrayList<>();
-		}
-		checkInCustomers.add(checkInCustomer);
-		checkInCustomer.setCheckInRecord(this);
-
-		return checkInCustomer;
-	}
-
-	public CheckInCustomer removeCheckInCustomer(CheckInCustomer checkInCustomer) {
-		if(checkInCustomers == null) {
-			return null;
-		}
-		checkInCustomers.remove(checkInCustomer);
-		checkInCustomer.setCheckInRecord(null);
-
-		return checkInCustomer;
-	}
-
 }

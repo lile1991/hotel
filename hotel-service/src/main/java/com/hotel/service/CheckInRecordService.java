@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import java.beans.Transient;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -196,46 +195,6 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
         return 0;
     }
 
-    @Transient
-    public int leave(CheckInRecord leaveCheckInRecord) {
-        CheckInRecord curCheckInRecord = findOne(leaveCheckInRecord.getId());
-        Assert.notNull(curCheckInRecord, "入住记录不存在");
-
-        CheckStateEnum checkStateEnum = CheckStateEnum.valueOf(curCheckInRecord.getState());
-        CheckStateEnum newCheckStateEnum;
-        switch (checkStateEnum) {
-            // 入住中
-            case CHECK_IN:
-                // 退房
-                newCheckStateEnum = CheckStateEnum.LEFT;
-                break;
-            // 预定中
-            case RESERVE:
-                // 取消预定
-                newCheckStateEnum = CheckStateEnum.CANCELED_RESERVE;
-                break;
-            default:
-                throw new IllegalStateException("重复的操作， 已取消预定或已退房");
-        }
-
-        curCheckInRecord.setState(newCheckStateEnum.name());
-        curCheckInRecord.setUpdateUser(leaveCheckInRecord.getUpdateUser());
-        curCheckInRecord.setUpdateTime(leaveCheckInRecord.getUpdateTime());
-
-        // 更新入住状态
-        save(curCheckInRecord);
-        // 更新房间状态
-        changeState(curCheckInRecord);
-        return 1;
-    }
-
-    @Transactional(readOnly = true)
-    public CheckInRecord findCheckOut(Long id) {
-        return findOne(((root, query, cb) -> {
-            root.fetch(CheckInRecord_.room);
-            return cb.equal(root.get(CheckInRecord_.id), id);
-        }));
-    }
 
     /**
      * 是否发生再此刻
