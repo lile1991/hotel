@@ -15,8 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Predicate;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +45,28 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
             root.fetch(CheckInRecord_.room);
             root.fetch(CheckInRecord_.createUser);
             root.fetch(CheckInRecord_.updateUser);
-            return null;
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            if(! StringUtils.isEmpty(queryDto.getState())) {
+                predicates.add(cb.equal(root.get(CheckInRecord_.state), queryDto.getState()));
+            }
+
+            if(queryDto.getCheckInTimeBegin() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get(CheckInRecord_.checkInTime), queryDto.getCheckInTimeBegin()));
+            }
+            if(queryDto.getCheckInTimeEnd() != null) {
+                predicates.add(cb.lessThan(root.get(CheckInRecord_.checkInTime), queryDto.getCheckInTimeEnd()));
+            }
+
+            if(queryDto.getCreateTimeBegin() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get(CheckInRecord_.createTime), queryDto.getCreateTimeBegin()));
+            }
+            if(queryDto.getCreateTimeEnd() != null) {
+                predicates.add(cb.lessThan(root.get(CheckInRecord_.createTime), queryDto.getCreateTimeEnd()));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[predicates.size()]));
         }, queryDto.toPageable());
     }
 
