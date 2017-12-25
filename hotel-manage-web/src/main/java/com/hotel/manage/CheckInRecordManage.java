@@ -3,13 +3,17 @@ package com.hotel.manage;
 import com.hotel.api.CheckInRecordApi;
 import com.hotel.dto.CheckInRecordQueryDto;
 import com.hotel.entity.CheckInRecord;
+import com.hotel.entity.CheckOutRecord;
 import com.hotel.entity.Room;
+import com.hotel.entity.RoomType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class CheckInRecordManage {
@@ -21,10 +25,23 @@ public class CheckInRecordManage {
     RoomManage roomManage;
 
     @Autowired
+    RoomTypeManage roomTypeManage;
+
+    @Autowired
     CommonManage commonManage;
 
     public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
-        return checkInRecordApi.findManage(queryDto);
+        Page<CheckInRecord> page = checkInRecordApi.findManage(queryDto);
+        List<CheckInRecord> content = page.getContent();
+        if(! CollectionUtils.isEmpty(content)) {
+            content.forEach(checkInRecord -> {
+                CheckOutRecord checkOutRecord = checkInRecord.getCheckOutRecord();
+                if(checkOutRecord != null) {
+                    checkOutRecord.setCheckInRecord(null);
+                }
+            });
+        }
+        return page;
     }
 
     /**
@@ -66,8 +83,13 @@ public class CheckInRecordManage {
 
     public CheckInRecord findFromCheckOut(Long id) {
         CheckInRecord checkInRecord = checkInRecordApi.findOne(id);
+
         Room room = roomManage.findOne(checkInRecord.getRoomId());
         checkInRecord.setRoom(room);
+
+        RoomType roomType = roomTypeManage.findOne(room.getRoomTypeId());
+        room.setRoomType(roomType);
+
         return checkInRecord;
     }
 }

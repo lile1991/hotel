@@ -3,11 +3,15 @@ package com.hotel.vo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 public class CheckOutVo {
     @NotNull
-    private Long deductDeposit;
+    private BigDecimal deductDeposit;
+
+    @NotNull
+    private BigDecimal backDeposit;
 
     @NotNull
     private Long checkInId;

@@ -30,8 +30,11 @@ public class CheckInCustomer implements Serializable {
 
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="create_user_id")
+	@JoinColumn(name="create_user_id", insertable = false, updatable = false)
 	private User createUser;
+
+	@Column(name = "create_user_id")
+	private Long createUserId;
 
 	@Column(name="id_card")
 	private String idCard;
@@ -44,8 +47,12 @@ public class CheckInCustomer implements Serializable {
 
 	//bi-directional many-to-one association to CheckInRecord
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="check_in_id")
+	@JoinColumn(name="check_in_id", insertable = false, updatable = false)
 	private CheckInRecord checkInRecord;
+
+	//bi-directional many-to-one association to CheckInRecord
+	@Column(name = "check_in_id")
+	private Long checkInRecordId;
 
 	public CheckInCustomer() {
 	}

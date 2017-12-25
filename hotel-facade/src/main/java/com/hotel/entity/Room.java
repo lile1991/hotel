@@ -55,15 +55,19 @@ public class Room implements Serializable {
 	@Column(name = "update_user_id")
 	private Long updateUserId;
 
-	//bi-directional many-to-one association to RoomFloor
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="floor")
+	@JoinColumn(name="floor", insertable = false, updatable = false)
 	private RoomFloor roomFloor;
 
-	//bi-directional many-to-one association to RoomType
+	@Column(name = "floor")
+	private Long roomFloorId;
+
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="type")
+	@JoinColumn(name="type", insertable = false, updatable = false)
 	private RoomType roomType;
+
+	@Column(name = "type")
+	private Integer roomTypeId;
 
 	//bi-directional many-to-one association to CheckInRecord
 	@OneToMany(mappedBy="room")

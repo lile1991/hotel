@@ -19,7 +19,7 @@ public class RoomService extends BaseService<Room, Long, RoomRepository> {
     @Transactional(readOnly = true)
     public List<Room> findManage(RoomQueryDto queryDto) {
         return super.findAll((root, query, cb) -> {
-            Predicate predicate = cb.equal(root.get(Room_.roomType).get(RoomType_.id), queryDto.getRoomType().getId());
+            Predicate predicate = cb.equal(root.get(Room_.roomType).get(RoomType_.id), queryDto.getRoomTypeId());
             root.fetch(Room_.roomFloor);
             root.fetch(Room_.roomType);
             return predicate;

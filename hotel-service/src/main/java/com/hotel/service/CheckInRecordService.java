@@ -10,6 +10,7 @@ import com.hotel.enums.RoomStateEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -34,16 +35,20 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
 
     @Transactional(readOnly = true)
     public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
+        // 按更新时间倒序
+        queryDto.addOrder(new Sort.Order(Sort.Direction.DESC, CheckInRecord_.updateTime.getName()));
+
         return findAll((root, query, cb) -> {
             root.fetch(CheckInRecord_.room);
             root.fetch(CheckInRecord_.createUser);
+            root.fetch(CheckInRecord_.updateUser);
             return null;
         }, queryDto.toPageable());
     }
 
     @Transactional
     public CheckInRecord checkIn(CheckInRecord checkInRecord) {
-        Room room = roomService.findOne(checkInRecord.getRoom().getId());
+        Room room = roomService.findOne(checkInRecord.getRoomId());
 
         RoomStateEnum roomStateEnum = RoomStateEnum.valueOf(room.getState());
         if(RoomStateEnum.RESERVE == roomStateEnum) {
@@ -78,9 +83,9 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
 
             checkInCustomer.setState("0");
             checkInCustomer.setCreateTime(dbCheckInRecord.getCreateTime());
-            checkInCustomer.setCreateUser(dbCheckInRecord.getCreateUser());
+            checkInCustomer.setCreateUserId(dbCheckInRecord.getCreateUserId());
 
-            checkInCustomer.setCheckInRecord(dbCheckInRecord);
+            checkInCustomer.setCheckInRecordId(dbCheckInRecord.getId());
         });
         checkInCustomerService.save(checkInRecord.getCheckInCustomers());
 
@@ -95,7 +100,7 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
         CheckInRecord reserveCheckInRecord = findOne(checkRecord.getId());
         Assert.notNull(reserveCheckInRecord, "预约不存在");
 
-        Assert.isTrue(isCurrentTime(reserveCheckInRecord.getCheckInTime(), reserveCheckInRecord.getOverTime(), - 30 * 60 * 1000), "未到入住时间");
+        Assert.isTrue(isCurrentTime(reserveCheckInRecord.getCheckInTime(), reserveCheckInRecord.getOverTime(), - 30 * 60 * 1000), "未到入住时间, 提前30分钟可入住");
 
         reserveCheckInRecord.setState(CheckStateEnum.CHECK_IN.name());
         reserveCheckInRecord.setUpdateTime(checkRecord.getUpdateTime());
@@ -113,7 +118,7 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
         Assert.notNull(checkInTime, "请选择入住时间");
         Assert.notNull(overTime, "请选择到期时间");
 
-        List<CheckInRecord> checkRecordList = findByCheckInTimeGreaterThanEqual(checkRecord.getRoom().getId(), checkInTime);
+        List<CheckInRecord> checkRecordList = findByCheckInTimeGreaterThanEqual(checkRecord.getRoomId(), checkInTime);
         if (! CollectionUtils.isEmpty(checkRecordList)) {
             for (CheckInRecord dbRecord: checkRecordList) {
                 if(checkRecord.getOverTime().getTime() < dbRecord.getCheckInTime().getTime()
@@ -149,13 +154,13 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
      */
     @Transactional(readOnly = true)
     public int existsReserve(Long roomId) {
-        return repository.existsReserve(roomId, CheckStateEnum.RESERVE, new Date());
+        return repository.existsReserve(roomId, CheckStateEnum.RESERVE.name(), new Date());
     }
 
     @Transactional
     public int changeState(CheckInRecord checkRecord) {
         // 查找房间
-        Room room = roomService.findOne(checkRecord.getRoom().getId());
+        Room room = roomService.findOne(checkRecord.getRoomId());
         // 当前房间状态
         RoomStateEnum curRoomState = RoomStateEnum.valueOf(room.getState());
 

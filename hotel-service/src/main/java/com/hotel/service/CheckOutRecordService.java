@@ -7,9 +7,8 @@ import com.hotel.enums.CheckStateEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
-import java.beans.Transient;
 
 @Slf4j
 @Service
@@ -18,9 +17,9 @@ public class CheckOutRecordService extends BaseService<CheckOutRecord, Long, Che
     @Autowired
     CheckInRecordService checkInRecordService;
 
-    @Transient
-    public int leave(CheckInRecord leaveCheckInRecord) {
-        CheckInRecord curCheckInRecord = checkInRecordService.findOne(leaveCheckInRecord.getId());
+    @Transactional
+    public Long checkOut(CheckOutRecord checkOutRecord) {
+        CheckInRecord curCheckInRecord = checkInRecordService.findOne(checkOutRecord.getId());
         Assert.notNull(curCheckInRecord, "入住记录不存在");
 
         CheckStateEnum checkStateEnum = CheckStateEnum.valueOf(curCheckInRecord.getState());
@@ -41,18 +40,15 @@ public class CheckOutRecordService extends BaseService<CheckOutRecord, Long, Che
         }
 
         curCheckInRecord.setState(newCheckStateEnum.name());
-        curCheckInRecord.setUpdateUser(leaveCheckInRecord.getUpdateUser());
-        curCheckInRecord.setUpdateTime(leaveCheckInRecord.getUpdateTime());
+        curCheckInRecord.setUpdateUserId(checkOutRecord.getUpdateUserId());
+        curCheckInRecord.setUpdateTime(checkOutRecord.getUpdateTime());
 
         // 更新入住状态
         checkInRecordService.save(curCheckInRecord);
         // 更新房间状态
         checkInRecordService.changeState(curCheckInRecord);
-        // TODO 插入退房记录
-        return 1;
-    }
-
-    public Long checkOut(CheckOutRecord checkOutRecord) {
-        return null;
+        // 插入退房记录
+        save(checkOutRecord);
+        return curCheckInRecord.getId();
     }
 }

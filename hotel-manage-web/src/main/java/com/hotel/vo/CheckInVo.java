@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +15,9 @@ public class CheckInVo {
     @NotNull
     private Date overTime;
     @NotNull
-    private Long payedCharge;
+    private BigDecimal payedCharge;
     @NotNull
-    private Long payedDeposit;
+    private BigDecimal payedDeposit;
 
     private Long memberId;
     @NotNull

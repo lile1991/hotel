@@ -41,7 +41,7 @@ public class CheckOutRecord implements Serializable {
 	private Date updateTime;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="update_user_id")
+	@JoinColumn(name="update_user_id", insertable = false, updatable = false)
 	private User updateUser;
 	@Column(name="update_user_id")
 	private Long updateUserId;

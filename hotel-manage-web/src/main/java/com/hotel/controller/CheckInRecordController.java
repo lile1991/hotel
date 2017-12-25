@@ -7,6 +7,7 @@ import com.hotel.entity.CheckInRecord;
 import com.hotel.enums.CheckStateEnum;
 import com.hotel.enums.EnumListConstant;
 import com.hotel.manage.CheckInRecordManage;
+import com.hotel.utils.AmountUtils;
 import com.hotel.vo.CheckInCustomerVo;
 import com.hotel.vo.CheckInVo;
 import com.hotel.vo.ResultVo;
@@ -55,8 +56,11 @@ public class CheckInRecordController extends BaseController {
     public ResultVo<?> checkIn(@Valid @RequestBody CheckInVo checkInVo) {
         CheckInRecord checkInRecord = new CheckInRecord();
         BeanUtils.copyProperties(checkInVo, checkInRecord);
+        checkInRecord.setPayedCharge(AmountUtils.toLong(checkInVo.getPayedCharge()));
+        checkInRecord.setPayedDeposit(AmountUtils.toLong(checkInVo.getPayedDeposit()));
 
-        long memberId = SystemConstant.getId(checkInVo.getMemberId());
+        checkInRecord.setMemberId(SystemConstant.getId(checkInRecord.getMemberId()));
+        long memberId = checkInRecord.getMemberId();
         if(SystemConstant.isNullId(memberId)) {
             // TODO 校验会员是否存在
         }

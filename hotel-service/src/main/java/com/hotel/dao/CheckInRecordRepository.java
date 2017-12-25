@@ -1,7 +1,6 @@
 package com.hotel.dao;
 
 import com.hotel.entity.CheckInRecord;
-import com.hotel.enums.CheckStateEnum;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,5 +13,5 @@ public interface CheckInRecordRepository extends BaseRepository<CheckInRecord, L
     List<CheckInRecord> findByRoomIdAndCheckInTimeGreaterThanEqual(@Param("roomId") Long roomId, @Param("checkInTime") Date checkInTime);
 
     @Query("select count(rd.id) from CheckInRecord rd where rd.room.id = :roomId and rd.state = :state and rd.checkInTime > :now")
-    int existsReserve(@Param("roomId") Long roomId, @Param("state") CheckStateEnum state, @Param("now") Date now);
+    int existsReserve(@Param("roomId") Long roomId, @Param("state") String state, @Param("now") Date now);
 }

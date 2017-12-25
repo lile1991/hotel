@@ -87,6 +87,7 @@ public class CheckInRecord implements Serializable {
 
 	//bi-directional one-to-one association to CheckOutRecord
 	@OneToOne(mappedBy="checkInRecord", fetch=FetchType.LAZY)
+	@JoinColumn(name = "id", insertable = false, updatable = false)
 	private CheckOutRecord checkOutRecord;
 
 	public CheckInRecord() {

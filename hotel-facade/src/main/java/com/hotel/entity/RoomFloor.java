@@ -32,19 +32,4 @@ public class RoomFloor implements Serializable {
 
 	public RoomFloor() {
 	}
-
-	public Room addRoomList(Room roomList) {
-		getRoomList().add(roomList);
-		roomList.setRoomFloor(this);
-
-		return roomList;
-	}
-
-	public Room removeRoomList(Room roomList) {
-		getRoomList().remove(roomList);
-		roomList.setRoomFloor(null);
-
-		return roomList;
-	}
-
 }

@@ -16,4 +16,8 @@ public class RoomTypeManage {
     public List<RoomType> findAll() {
         return roomTypeApi.findAll();
     }
+
+    public RoomType findOne(Integer roomTypeId) {
+        return roomTypeApi.findOne(roomTypeId);
+    }
 }
