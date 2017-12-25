@@ -25,7 +25,9 @@ public class CheckInVo {
 
     private Long roomTypeId;
 
+    private String mobile;
+
     @NotNull
-    @Size(min = 1, message = "至少登记一个住户")
+    @Size(min = 1, message = "至少登记一个客户")
     private List<CheckInCustomerVo> checkInCustomers;
 }

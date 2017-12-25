@@ -2,9 +2,7 @@ package com.hotel.service;
 
 import com.hotel.dao.CheckInRecordRepository;
 import com.hotel.dto.CheckInRecordQueryDto;
-import com.hotel.entity.CheckInRecord;
-import com.hotel.entity.CheckInRecord_;
-import com.hotel.entity.Room;
+import com.hotel.entity.*;
 import com.hotel.enums.CheckStateEnum;
 import com.hotel.enums.RoomStateEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +15,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Predicate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,6 +63,12 @@ public class CheckInRecordService extends BaseService<CheckInRecord, Long, Check
             }
             if(queryDto.getCreateTimeEnd() != null) {
                 predicates.add(cb.lessThan(root.get(CheckInRecord_.createTime), queryDto.getCreateTimeEnd()));
+            }
+
+            // 同名情况下会查出重复记录
+            if(! StringUtils.isEmpty(queryDto.getCheckInCustomerName())) {
+                ListJoin<CheckInRecord, CheckInCustomer> checkInCustomerListJoin = root.join(CheckInRecord_.checkInCustomers);
+                predicates.add(checkInCustomerListJoin.get(CheckInCustomer_.name).in(queryDto.getCheckInCustomerName()));
             }
 
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));

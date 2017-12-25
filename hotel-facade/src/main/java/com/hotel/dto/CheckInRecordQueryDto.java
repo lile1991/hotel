@@ -10,6 +10,7 @@ public class CheckInRecordQueryDto extends PageableDto {
     private int size;
 
     private String state;
+    private String checkInCustomerName;
 
     private Date checkInTimeBegin;
     private Date checkInTimeEnd;

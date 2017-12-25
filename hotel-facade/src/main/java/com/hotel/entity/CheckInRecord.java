@@ -26,6 +26,8 @@ public class CheckInRecord implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	private String mobile;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="check_in_time")
 	private Date checkInTime;
