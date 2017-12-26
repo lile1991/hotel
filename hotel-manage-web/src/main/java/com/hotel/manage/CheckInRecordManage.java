@@ -25,6 +25,9 @@ public class CheckInRecordManage {
     RoomManage roomManage;
 
     @Autowired
+    UserManage userManage;
+
+    @Autowired
     RoomTypeManage roomTypeManage;
 
     @Autowired
@@ -32,6 +35,9 @@ public class CheckInRecordManage {
 
     @Autowired
     CheckOutRecordManage checkOutRecordManage;
+
+    @Autowired
+    CheckInCustomerManage checkInCustomerManage;
 
     public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
         Page<CheckInRecord> page = checkInRecordApi.findManage(queryDto);
@@ -85,15 +91,27 @@ public class CheckInRecordManage {
     }
 
     public CheckInRecord findDetail(Long id) {
+        // 查找入住记录
         CheckInRecord checkInRecord = checkInRecordApi.findOne(id);
+
+        // 查找登记人
+        checkInRecord.setCreateUser(userManage.findOne(checkInRecord.getCreateUserId()));
+
+        // 查找入住客户
+        checkInRecord.setCheckInCustomers(checkInCustomerManage.findByCheckInRecordId(id));
+
+        // 查找退房记录
         CheckOutRecord checkOutRecord = checkInRecord.getCheckOutRecord();
         if(checkOutRecord != null) {
             checkOutRecord.setCheckInRecord(null);
+            checkOutRecord.setCreateUser(userManage.findOne(checkOutRecord.getCreateUserId()));
         }
 
+        // 查找房间信息
         Room room = roomManage.findOne(checkInRecord.getRoomId());
         checkInRecord.setRoom(room);
 
+        // 查找房间类型
         RoomType roomType = roomTypeManage.findOne(room.getRoomTypeId());
         room.setRoomType(roomType);
         return checkInRecord;
