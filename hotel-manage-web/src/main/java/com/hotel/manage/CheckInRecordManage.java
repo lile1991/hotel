@@ -30,6 +30,9 @@ public class CheckInRecordManage {
     @Autowired
     CommonManage commonManage;
 
+    @Autowired
+    CheckOutRecordManage checkOutRecordManage;
+
     public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
         Page<CheckInRecord> page = checkInRecordApi.findManage(queryDto);
         List<CheckInRecord> content = page.getContent();
@@ -81,15 +84,18 @@ public class CheckInRecordManage {
         return checkInRecordApi.findOne(id);
     }
 
-    public CheckInRecord findFromCheckOut(Long id) {
+    public CheckInRecord findDetail(Long id) {
         CheckInRecord checkInRecord = checkInRecordApi.findOne(id);
+        CheckOutRecord checkOutRecord = checkInRecord.getCheckOutRecord();
+        if(checkOutRecord != null) {
+            checkOutRecord.setCheckInRecord(null);
+        }
 
         Room room = roomManage.findOne(checkInRecord.getRoomId());
         checkInRecord.setRoom(room);
 
         RoomType roomType = roomTypeManage.findOne(room.getRoomTypeId());
         room.setRoomType(roomType);
-
         return checkInRecord;
     }
 }

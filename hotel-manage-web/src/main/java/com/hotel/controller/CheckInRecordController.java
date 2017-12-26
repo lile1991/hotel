@@ -39,10 +39,10 @@ public class CheckInRecordController extends BaseController {
         return ResultVo.success(checkInRecordManage.findOne(id));
     }
 
-    @RequestMapping("findFromCheckOut/{id}")
+    @RequestMapping("findDetail/{id}")
     @ResponseBody
-    public ResultVo<?> findFromCheckOut(@PathVariable("id") Long id) {
-        return ResultVo.success(checkInRecordManage.findFromCheckOut(id));
+    public ResultVo<?> findDetail(@PathVariable("id") Long id) {
+        return ResultVo.success(checkInRecordManage.findDetail(id));
     }
 
     @RequestMapping("getCheckStateEnums")
