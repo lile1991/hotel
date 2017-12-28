@@ -14,7 +14,6 @@
         <module>hotel-manage-web</module>
         <module>hotel-facades</module>
         <module>hotel-services</module>
-        <module>hotel-utils</module>
     </modules>
 
     <parent>
@@ -60,11 +59,6 @@
             <dependency>
                 <groupId>hotel</groupId>
                 <artifactId>hotel-common-service</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>hotel</groupId>
-                <artifactId>hotel-utils</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
