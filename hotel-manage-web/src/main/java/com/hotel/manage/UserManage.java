@@ -14,4 +14,8 @@ public class UserManage {
     public User findOne(Long id) {
         return userApi.findOne(id);
     }
+
+    public User findByUsername(String username) {
+        return userApi.findByUsername(username);
+    }
 }

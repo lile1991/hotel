@@ -1,6 +1,6 @@
 package com.hotel.shiro;
 
-import com.hotel.user.api.UserApi;
+import com.hotel.manage.UserManage;
 import com.hotel.user.entity.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
-    UserApi userApi;
+    UserManage userManage;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -27,7 +27,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 //        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         String username = (String) authenticationToken.getPrincipal();
-        User user = userApi.findByUsername(username);
+        User user = userManage.findByUsername(username);
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }
