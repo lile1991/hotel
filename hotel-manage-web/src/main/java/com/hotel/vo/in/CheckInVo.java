@@ -1,4 +1,4 @@
-package com.hotel.vo;
+package com.hotel.vo.in;
 
 import lombok.Data;
 
