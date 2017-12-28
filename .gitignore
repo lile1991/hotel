@@ -6,3 +6,5 @@ target/
 .project
 /RemoteSystemsTempFiles/
 /.metadata/
+*.class
+hotel.log*
