@@ -1,7 +1,7 @@
 package com.hotel.manage;
 
-import com.hotel.api.UserApi;
-import com.hotel.entity.User;
+import com.hotel.user.api.UserApi;
+import com.hotel.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

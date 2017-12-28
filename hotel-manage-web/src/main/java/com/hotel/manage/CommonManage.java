@@ -1,6 +1,6 @@
 package com.hotel.manage;
 
-import com.hotel.entity.User;
+import com.hotel.user.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component

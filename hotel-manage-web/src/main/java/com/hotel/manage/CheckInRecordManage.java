@@ -6,6 +6,9 @@ import com.hotel.entity.CheckInRecord;
 import com.hotel.entity.CheckOutRecord;
 import com.hotel.entity.Room;
 import com.hotel.entity.RoomType;
+import com.hotel.utils.HotelBeanUtils;
+import com.hotel.vo.out.CheckInRecordOutVo;
+import com.hotel.vo.out.CheckOutRecordOutVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -39,18 +42,17 @@ public class CheckInRecordManage {
     @Autowired
     CheckInCustomerManage checkInCustomerManage;
 
-    public Page<CheckInRecord> findManage(CheckInRecordQueryDto queryDto) {
+    public Page<CheckInRecordOutVo> findManage(CheckInRecordQueryDto queryDto) {
         Page<CheckInRecord> page = checkInRecordApi.findManage(queryDto);
-        List<CheckInRecord> content = page.getContent();
-        if(! CollectionUtils.isEmpty(content)) {
-            content.forEach(checkInRecord -> {
-                CheckOutRecord checkOutRecord = checkInRecord.getCheckOutRecord();
-                if(checkOutRecord != null) {
-                    checkOutRecord.setCheckInRecord(null);
-                }
+        Page<CheckInRecordOutVo> voPage = HotelBeanUtils.convert(page, CheckInRecordOutVo.class);
+        List<CheckInRecordOutVo> voContent = voPage.getContent();
+        if(! CollectionUtils.isEmpty(voContent)) {
+            voContent.forEach(checkInRecord -> {
+                CheckOutRecordOutVo checkOutRecord = checkInRecord.getCheckOutRecord();
+                checkInRecord.setCreateUser(userManage.findOne(checkOutRecord.getCreateUserId()));
             });
         }
-        return page;
+        return voPage;
     }
 
     /**
@@ -93,9 +95,10 @@ public class CheckInRecordManage {
     public CheckInRecord findDetail(Long id) {
         // 查找入住记录
         CheckInRecord checkInRecord = checkInRecordApi.findOne(id);
+        CheckInRecordOutVo outVo = HotelBeanUtils.convert(checkInRecord, CheckInRecordOutVo.class);
 
         // 查找登记人
-        checkInRecord.setCreateUser(userManage.findOne(checkInRecord.getCreateUserId()));
+        outVo.setCreateUser(userManage.findOne(checkInRecord.getCreateUserId()));
 
         // 查找入住客户
         checkInRecord.setCheckInCustomers(checkInCustomerManage.findByCheckInRecordId(id));
@@ -103,8 +106,10 @@ public class CheckInRecordManage {
         // 查找退房记录
         CheckOutRecord checkOutRecord = checkInRecord.getCheckOutRecord();
         if(checkOutRecord != null) {
-            checkOutRecord.setCheckInRecord(null);
-            checkOutRecord.setCreateUser(userManage.findOne(checkOutRecord.getCreateUserId()));
+            CheckOutRecordOutVo checkOutRecordOutVo = HotelBeanUtils.convert(checkOutRecord, CheckOutRecordOutVo.class);
+            checkOutRecordOutVo.setCheckInRecord(null);
+            checkOutRecordOutVo.setCreateUser(userManage.findOne(checkOutRecord.getCreateUserId()));
+            outVo.setCheckOutRecord(checkOutRecordOutVo);
         }
 
         // 查找房间信息
