@@ -22,13 +22,14 @@
         </dependency>
         <dependency>
             <groupId>hotel</groupId>
-            <artifactId>hotel-service</artifactId>
-            <!--<scope>provided</scope>-->
+            <artifactId>hotel-user-facade</artifactId>
         </dependency>
 
+        <!--改成微服务后service就不需要依赖了-->
         <dependency>
             <groupId>hotel</groupId>
-            <artifactId>hotel-user-facade</artifactId>
+            <artifactId>hotel-service</artifactId>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>hotel</groupId>
