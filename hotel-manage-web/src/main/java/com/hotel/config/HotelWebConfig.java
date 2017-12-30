@@ -27,12 +27,12 @@ public class HotelWebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://localhost:9528")
 //        org.springframework.http.HttpMethod
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization", "Content-Type")
-                .allowCredentials(false).maxAge(3600);
+                .allowCredentials(true).maxAge(3600);
         super.addCorsMappings(registry);
     }
 

@@ -20,7 +20,7 @@ public class UserController {
         UsernamePasswordToken userToken = new UsernamePasswordToken();
         userToken.setUsername(loginVo.getUsername());
         userToken.setPassword(loginVo.getPassword().toCharArray());
-        userToken.setRememberMe(true);
+//        userToken.setRememberMe(false);
         subject.login(userToken);
         return ResultVo.success(subject.getSession().getId());
     }
