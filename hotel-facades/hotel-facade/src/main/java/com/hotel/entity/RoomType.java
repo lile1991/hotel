@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the room_type database table.
+ * 房间类型
  * 
  */
 @Getter

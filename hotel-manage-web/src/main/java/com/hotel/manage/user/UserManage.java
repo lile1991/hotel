@@ -1,4 +1,4 @@
-package com.hotel.manage;
+package com.hotel.manage.user;
 
 import com.hotel.user.api.UserApi;
 import com.hotel.user.entity.User;

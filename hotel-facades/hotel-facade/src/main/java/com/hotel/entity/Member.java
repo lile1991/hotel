@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the member database table.
+ * 会员
  * 
  */
 @Getter

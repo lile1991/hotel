@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the check_in_customer database table.
+ * 入住客户
  * 
  */
 @Getter

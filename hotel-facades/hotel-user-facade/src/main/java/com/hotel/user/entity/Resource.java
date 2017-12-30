@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * 受保护的资源
+ */
 @Getter
 @Setter
 @Entity
@@ -16,6 +19,12 @@ public class Resource implements Serializable {
     private Long id;
 
     private String type;
+
     private String group;
+
     private String value;
+
+    /*public String getGroupAndValue() {
+        return group + ":" + value;
+    }*/
 }

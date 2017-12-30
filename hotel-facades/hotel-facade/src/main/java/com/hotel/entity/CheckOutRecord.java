@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the check_out_record database table.
+ * 离店记录， 与CheckInRecord一对一关联
  * 
  */
 @Getter

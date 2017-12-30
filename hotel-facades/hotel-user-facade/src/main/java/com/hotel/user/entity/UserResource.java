@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * 资源权限关联
+ */
 @Getter
 @Setter
 @Entity

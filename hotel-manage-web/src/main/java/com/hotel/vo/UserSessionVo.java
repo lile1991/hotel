@@ -2,9 +2,13 @@ package com.hotel.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class UserSessionVo {
+public class UserSessionVo implements Serializable {
     public static final String SESSION_KEY = "user.session.key";
 
-    private String token;
+    private Long id;
+    private String credentials;
+    private String ip;
 }

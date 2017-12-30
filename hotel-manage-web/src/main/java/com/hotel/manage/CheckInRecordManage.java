@@ -6,6 +6,7 @@ import com.hotel.entity.CheckInRecord;
 import com.hotel.entity.CheckOutRecord;
 import com.hotel.entity.Room;
 import com.hotel.entity.RoomType;
+import com.hotel.manage.user.UserManage;
 import com.hotel.utils.HotelBeanUtils;
 import com.hotel.vo.out.CheckInRecordOutVo;
 import com.hotel.vo.out.CheckOutRecordOutVo;

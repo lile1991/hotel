@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the check_in_record database table.
+ * 入住记录
  * 
  */
 @Getter

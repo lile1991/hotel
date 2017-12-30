@@ -16,5 +16,5 @@ INSERT INTO room_floor (floor, alias) VALUES (6, '六楼');
 INSERT INTO room_floor (floor, alias) VALUES (7, '七楼');
 
 # 初始化系统管理员
-insert into user (id, name, mobile, create_time, create_user_id, update_time, update_user_id)
-VALUES (1, '系统管理员', 'admin', now(), 0, now(), 0);
+insert into user (id, name, mobile, username, password, locked, create_time, create_user_id, update_time, update_user_id)
+VALUES (1, '系统管理员', '18025480826', 'admin', 'd4c68548715b89ed719d4ae0e9e1ca09', 0, now(), 0, now(), 0);
