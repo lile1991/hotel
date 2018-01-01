@@ -5,12 +5,10 @@ import com.hotel.entity.Room;
 import com.hotel.manage.CheckInRecordManage;
 import com.hotel.manage.RoomManage;
 import com.hotel.vo.ResultVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("room")
@@ -22,26 +20,27 @@ public class RoomController extends BaseController {
     @Autowired
     CheckInRecordManage checkInRecordManage;
 
-    @RequestMapping("findManage")
+    @PostMapping(value = "findManage")
     @ResponseBody
     public ResultVo<?> findManage(@RequestBody RoomQueryDto roomQueryDto) {
         return ResultVo.success(roomManage.findManage(roomQueryDto));
     }
 
-    @RequestMapping("findAll")
+    @PostMapping("findAll")
     @ResponseBody
     public ResultVo<?> findAll(@RequestBody Room room) {
         return ResultVo.success(roomManage.findAll(room));
     }
 
-    @RequestMapping("findOne/{id}")
+    @GetMapping("findOne/{id}")
     @ResponseBody
     public ResultVo<?> findAll(@PathVariable("id") Long id) {
         return ResultVo.success(roomManage.findOne(id));
     }
 
-    @RequestMapping("enable/{id}")
+    @GetMapping("enable/{id}")
     @ResponseBody
+    @RequiresPermissions("room:enable")
     public ResultVo<?> enable(@PathVariable("id") Long id) {
         int result = roomManage.enable(id);
         if(result == 1) {
@@ -50,8 +49,9 @@ public class RoomController extends BaseController {
         return ResultVo.fail(result, "启用房间失败");
     }
 
-    @RequestMapping("disable/{id}")
+    @GetMapping("disable/{id}")
     @ResponseBody
+    @RequiresPermissions("room:disable")
     public ResultVo<?> disable(@PathVariable("id") Long id) {
         int result = roomManage.disable(id);
         if(result == 1) {

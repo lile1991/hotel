@@ -7,6 +7,7 @@ import com.hotel.vo.ResultVo;
 import com.hotel.vo.in.CheckOutVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +22,7 @@ public class CheckOutRecordController extends BaseController {
     @Autowired
     CheckOutRecordManage checkOutRecordManage;
 
-    @RequestMapping("checkOut")
+    @PostMapping("checkOut")
     @ResponseBody
     public ResultVo<?> checkOut(@Valid @RequestBody CheckOutVo checkOutVo) {
         CheckOutRecord checkOutRecord = new CheckOutRecord();

@@ -27,25 +27,25 @@ public class CheckInRecordController extends BaseController {
     @Autowired
     CheckInRecordManage checkInRecordManage;
 
-    @RequestMapping("findManage")
+    @PostMapping("findManage")
     @ResponseBody
     public ResultVo<?> findManage(@RequestBody CheckInRecordQueryDto queryDto) {
         return ResultVo.success(checkInRecordManage.findManage(queryDto));
     }
 
-    @RequestMapping("findOne/{id}")
+    @GetMapping("findOne/{id}")
     @ResponseBody
     public ResultVo<?> findOne(@PathVariable("id") Long id) {
         return ResultVo.success(checkInRecordManage.findOne(id));
     }
 
-    @RequestMapping("findDetail/{id}")
+    @GetMapping("findDetail/{id}")
     @ResponseBody
     public ResultVo<?> findDetail(@PathVariable("id") Long id) {
         return ResultVo.success(checkInRecordManage.findDetail(id));
     }
 
-    @RequestMapping("getCheckStateEnums")
+    @GetMapping("getCheckStateEnums")
     @ResponseBody
     public ResultVo<?> getCheckStateEnums() {
         return ResultVo.success(EnumListConstant.getEnumEntryList(CheckStateEnum.class));
@@ -77,7 +77,7 @@ public class CheckInRecordController extends BaseController {
         return ResultVo.success(checkInRecordManage.checkIn(checkInRecord).getId(), "登记入住成功");
     }
 
-    @RequestMapping("reserveCheckIn/{id}")
+    @GetMapping("reserveCheckIn/{id}")
     @ResponseBody
     public ResultVo<?> reserveCheckIn(@PathVariable("id") Long id) {
         return ResultVo.success(checkInRecordManage.reserveCheckIn(id), "预约入住成功");
