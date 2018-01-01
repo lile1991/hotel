@@ -26,11 +26,11 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        Long userId = (Long) principalCollection.getPrimaryPrincipal();
+        UserSessionVo userSessionVo = (UserSessionVo) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 //        authorizationInfo.setRoles(userApi.findRoles(username));
 
-        List<Resource> resources = userResourceManage.findByUserId(userId);
+        List<Resource> resources = userResourceManage.findByUserId(userSessionVo.getId());
         if(resources != null) {
             authorizationInfo.setStringPermissions(resources.stream().map(Resource::getValue).collect(Collectors.toSet()));
         }
