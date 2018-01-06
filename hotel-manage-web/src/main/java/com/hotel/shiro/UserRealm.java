@@ -59,7 +59,7 @@ public class UserRealm extends AuthorizingRealm {
         // 密码加密， 数据库已经是加密后的， 这里无需再次加密
         // new Md5Hash(user.getPassword(), salt, 2).toString();
 
-        String salt = "CBD";
+        String salt = "CBD";    // 盐  可以存到用户表里， 用不一样的值
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以在此判断或自定义实现
         return new SimpleAuthenticationInfo(
                 userSessionVo, //用户ID
