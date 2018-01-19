@@ -50,7 +50,9 @@ public class CheckInRecordManage {
         if(! CollectionUtils.isEmpty(voContent)) {
             voContent.forEach(checkInRecord -> {
                 CheckOutRecordOutVo checkOutRecord = checkInRecord.getCheckOutRecord();
-                checkInRecord.setCreateUser(userManage.findOne(checkOutRecord.getCreateUserId()));
+                if(checkOutRecord != null) {
+                    checkInRecord.setCreateUser(userManage.findOne(checkOutRecord.getCreateUserId()));
+                }
             });
         }
         return voPage;
