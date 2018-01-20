@@ -32,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
 
         List<Resource> resources = userResourceManage.findByUserId(userSessionVo.getId());
         if(resources != null) {
-            authorizationInfo.setStringPermissions(resources.stream().map(Resource::getValue).collect(Collectors.toSet()));
+            authorizationInfo.setStringPermissions(resources.stream().map(r -> r.getModule() + ":" + r.getName()).collect(Collectors.toSet()));
         }
         return authorizationInfo;
     }

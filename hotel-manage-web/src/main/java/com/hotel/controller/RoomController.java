@@ -22,19 +22,22 @@ public class RoomController extends BaseController {
 
     @PostMapping(value = "findManage")
     @ResponseBody
+    @RequiresPermissions("room:findManage")
     public ResultVo<?> findManage(@RequestBody RoomQueryDto roomQueryDto) {
         return ResultVo.success(roomManage.findManage(roomQueryDto));
     }
 
     @PostMapping("findAll")
     @ResponseBody
+    @RequiresPermissions("room:findAll")
     public ResultVo<?> findAll(@RequestBody Room room) {
         return ResultVo.success(roomManage.findAll(room));
     }
 
     @GetMapping("findOne/{id}")
     @ResponseBody
-    public ResultVo<?> findAll(@PathVariable("id") Long id) {
+    @RequiresPermissions("room:findOne")
+    public ResultVo<?> findOne(@PathVariable("id") Long id) {
         return ResultVo.success(roomManage.findOne(id));
     }
 

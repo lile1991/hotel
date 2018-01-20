@@ -11,6 +11,7 @@ import com.hotel.utils.AmountUtils;
 import com.hotel.vo.ResultVo;
 import com.hotel.vo.in.CheckInCustomerVo;
 import com.hotel.vo.in.CheckInVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,30 +30,35 @@ public class CheckInRecordController extends BaseController {
 
     @PostMapping("findManage")
     @ResponseBody
+    @RequiresPermissions("checkInRecord:findManage")
     public ResultVo<?> findManage(@RequestBody CheckInRecordQueryDto queryDto) {
         return ResultVo.success(checkInRecordManage.findManage(queryDto));
     }
 
     @GetMapping("findOne/{id}")
     @ResponseBody
+    @RequiresPermissions("checkInRecord:findOne")
     public ResultVo<?> findOne(@PathVariable("id") Long id) {
         return ResultVo.success(checkInRecordManage.findOne(id));
     }
 
     @GetMapping("findDetail/{id}")
     @ResponseBody
+    @RequiresPermissions("checkInRecord:findDetail")
     public ResultVo<?> findDetail(@PathVariable("id") Long id) {
         return ResultVo.success(checkInRecordManage.findDetail(id));
     }
 
     @GetMapping("getCheckStateEnums")
     @ResponseBody
+    @RequiresPermissions("checkInRecord:getCheckStateEnums")
     public ResultVo<?> getCheckStateEnums() {
         return ResultVo.success(EnumListConstant.getEnumEntryList(CheckStateEnum.class));
     }
 
     @PostMapping("checkIn")
     @ResponseBody
+    @RequiresPermissions("checkInRecord:checkIn")
     public ResultVo<?> checkIn(@Valid @RequestBody CheckInVo checkInVo) {
         CheckInRecord checkInRecord = new CheckInRecord();
         BeanUtils.copyProperties(checkInVo, checkInRecord);
@@ -79,6 +85,7 @@ public class CheckInRecordController extends BaseController {
 
     @GetMapping("reserveCheckIn/{id}")
     @ResponseBody
+    @RequiresPermissions("checkInRecord:reserveCheckIn")
     public ResultVo<?> reserveCheckIn(@PathVariable("id") Long id) {
         return ResultVo.success(checkInRecordManage.reserveCheckIn(id), "预约入住成功");
     }

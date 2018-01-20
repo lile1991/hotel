@@ -18,11 +18,15 @@ public class Resource implements Serializable {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    private String type;
+    private Integer type;
 
-    private String group;
+    private String module;
+
+    private String name;
 
     private String value;
+
+    private String remark;
 
     /*public String getGroupAndValue() {
         return group + ":" + value;
