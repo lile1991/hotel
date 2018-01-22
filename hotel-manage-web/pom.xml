@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>hotel</groupId>
-            <artifactId>hotel-facade</artifactId>
+            <artifactId>hotel-room-facade</artifactId>
         </dependency>
         <dependency>
             <groupId>hotel</groupId>
@@ -28,7 +28,7 @@
         <!--改成微服务后service就不需要依赖了-->
         <dependency>
             <groupId>hotel</groupId>
-            <artifactId>hotel-service</artifactId>
+            <artifactId>hotel-room-service</artifactId>
             <!--<scope>provided</scope>-->
         </dependency>
         <dependency>

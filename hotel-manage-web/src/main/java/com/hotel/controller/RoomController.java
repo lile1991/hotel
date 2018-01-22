@@ -1,9 +1,9 @@
 package com.hotel.controller;
 
-import com.hotel.dto.RoomQueryDto;
-import com.hotel.entity.Room;
 import com.hotel.manage.CheckInRecordManage;
 import com.hotel.manage.RoomManage;
+import com.hotel.room.dto.RoomQueryDto;
+import com.hotel.room.entity.Room;
 import com.hotel.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

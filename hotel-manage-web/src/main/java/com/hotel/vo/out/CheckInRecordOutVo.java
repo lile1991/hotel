@@ -1,6 +1,6 @@
 package com.hotel.vo.out;
 
-import com.hotel.entity.CheckInRecord;
+import com.hotel.room.entity.CheckInRecord;
 import com.hotel.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;

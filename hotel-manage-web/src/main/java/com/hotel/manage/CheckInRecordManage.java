@@ -1,12 +1,12 @@
 package com.hotel.manage;
 
-import com.hotel.api.CheckInRecordApi;
-import com.hotel.dto.CheckInRecordQueryDto;
-import com.hotel.entity.CheckInRecord;
-import com.hotel.entity.CheckOutRecord;
-import com.hotel.entity.Room;
-import com.hotel.entity.RoomType;
 import com.hotel.manage.user.UserManage;
+import com.hotel.room.api.CheckInRecordApi;
+import com.hotel.room.dto.CheckInRecordQueryDto;
+import com.hotel.room.entity.CheckInRecord;
+import com.hotel.room.entity.CheckOutRecord;
+import com.hotel.room.entity.Room;
+import com.hotel.room.entity.RoomType;
 import com.hotel.utils.HotelBeanUtils;
 import com.hotel.vo.out.CheckInRecordOutVo;
 import com.hotel.vo.out.CheckOutRecordOutVo;

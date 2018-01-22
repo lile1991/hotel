@@ -13,8 +13,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>hotel</groupId>
+            <artifactId>hotel-common-facade</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

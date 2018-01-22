@@ -13,7 +13,7 @@
 
     <modules>
         <module>hotel-common-service</module>
-        <module>hotel-service</module>
+        <module>hotel-room-service</module>
         <module>hotel-user-service</module>
     </modules>
 </project>

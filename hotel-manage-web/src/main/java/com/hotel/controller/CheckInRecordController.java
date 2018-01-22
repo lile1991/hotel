@@ -1,13 +1,13 @@
 package com.hotel.controller;
 
-import com.hotel.constant.SystemConstant;
-import com.hotel.dto.CheckInRecordQueryDto;
-import com.hotel.entity.CheckInCustomer;
-import com.hotel.entity.CheckInRecord;
-import com.hotel.enums.CheckStateEnum;
-import com.hotel.enums.EnumListConstant;
 import com.hotel.manage.CheckInRecordManage;
-import com.hotel.utils.AmountUtils;
+import com.hotel.room.constant.SystemConstant;
+import com.hotel.room.dto.CheckInRecordQueryDto;
+import com.hotel.room.entity.CheckInCustomer;
+import com.hotel.room.entity.CheckInRecord;
+import com.hotel.room.enums.CheckStateEnum;
+import com.hotel.room.enums.EnumListConstant;
+import com.hotel.room.utils.AmountUtils;
 import com.hotel.vo.ResultVo;
 import com.hotel.vo.in.CheckInCustomerVo;
 import com.hotel.vo.in.CheckInVo;

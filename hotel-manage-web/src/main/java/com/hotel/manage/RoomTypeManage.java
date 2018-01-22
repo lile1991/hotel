@@ -1,7 +1,7 @@
 package com.hotel.manage;
 
-import com.hotel.api.RoomTypeApi;
-import com.hotel.entity.RoomType;
+import com.hotel.room.api.RoomTypeApi;
+import com.hotel.room.entity.RoomType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.hotel.manage;
 
-import com.hotel.api.CheckOutRecordApi;
-import com.hotel.entity.CheckOutRecord;
+import com.hotel.room.api.CheckOutRecordApi;
+import com.hotel.room.entity.CheckOutRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

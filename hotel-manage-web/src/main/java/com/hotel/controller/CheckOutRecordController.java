@@ -1,8 +1,8 @@
 package com.hotel.controller;
 
-import com.hotel.entity.CheckOutRecord;
 import com.hotel.manage.CheckOutRecordManage;
-import com.hotel.utils.AmountUtils;
+import com.hotel.room.entity.CheckOutRecord;
+import com.hotel.room.utils.AmountUtils;
 import com.hotel.vo.ResultVo;
 import com.hotel.vo.in.CheckOutVo;
 import org.springframework.beans.factory.annotation.Autowired;

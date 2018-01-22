@@ -12,7 +12,8 @@
     <artifactId>hotel-facades</artifactId>
 
     <modules>
-        <module>hotel-facade</module>
+        <module>hotel-room-facade</module>
         <module>hotel-user-facade</module>
+        <module>hotel-common-facade</module>
     </modules>
 </project>
