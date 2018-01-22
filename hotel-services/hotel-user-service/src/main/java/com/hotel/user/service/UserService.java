@@ -34,4 +34,10 @@ public class UserService extends BaseService<User, Long, UserRepository> {
             return null;
         }), userQueryDto.toPageable());
     }
+
+    @Transactional
+    public int updateLockState(Long id, boolean locked) {
+        return repository.updateLockState(id, locked);
+    }
+
 }

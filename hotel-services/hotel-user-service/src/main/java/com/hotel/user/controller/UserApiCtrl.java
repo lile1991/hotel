@@ -28,4 +28,14 @@ public class UserApiCtrl implements UserApi {
     public Page<User> findManage(UserQueryDto userQueryDto) {
         return userService.findAll(userQueryDto);
     }
+
+    @Override
+    public int lock(Long id) {
+        return userService.updateLockState(id, true);
+    }
+
+    @Override
+    public int unlock(Long id) {
+        return userService.updateLockState(id, false);
+    }
 }

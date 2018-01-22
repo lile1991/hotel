@@ -9,10 +9,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("user")
 @Controller
@@ -37,5 +34,17 @@ public class UserController {
     @ResponseBody
     public ResultVo<?> findManage(UserQueryDto userQueryDto) {
         return ResultVo.success(userManage.findManage(userQueryDto));
+    }
+
+    @GetMapping("lock/{id}")
+    @ResponseBody
+    public ResultVo<?> lock(@PathVariable("id") Long id) {
+        return ResultVo.success(userManage.lock(id) == 1 ? "禁用用户成功" : "禁用用户失败");
+    }
+
+    @GetMapping("unlock/{id}")
+    @ResponseBody
+    public ResultVo<?> unlock(@PathVariable("id") Long id) {
+        return ResultVo.success(userManage.unlock(id) == 1 ? "启用用户成功" : "启用用户失败");
     }
 }

@@ -10,4 +10,8 @@ public interface UserApi {
     User findOne(Long id);
 
     Page<User> findManage(UserQueryDto userQueryDto);
+
+    int lock(Long id);
+
+    int unlock(Long id);
 }

@@ -24,4 +24,12 @@ public class UserManage {
     public Page<User> findManage(UserQueryDto userQueryDto) {
         return userApi.findManage(userQueryDto);
     }
+
+    public int lock(Long id) {
+        return userApi.lock(id);
+    }
+
+    public int unlock(Long id) {
+        return userApi.unlock(id);
+    }
 }
