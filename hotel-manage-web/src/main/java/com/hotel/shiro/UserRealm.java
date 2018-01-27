@@ -46,10 +46,10 @@ public class UserRealm extends AuthorizingRealm {
 
         User user = userManage.findByUsername(username);
         if(user == null) {
-            throw new UnknownAccountException();//没找到帐号
+            throw new UnknownAccountException("帐号或密码错误");//没找到帐号
         }
         if(Boolean.TRUE.equals(user.getLocked())) {
-            throw new LockedAccountException(); //帐号锁定
+            throw new LockedAccountException("帐号已被禁用"); //帐号锁定
         }
 
         UserSessionVo userSessionVo = new UserSessionVo();

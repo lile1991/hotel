@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "com.hotel.user.service")
 //@EnableConfigurationProperties(DataSourceProperties.class)
 //@EnableTransactionManagement
-public class HotelUserServiceConfig {
+public class HotelUserServiceConfiguration {
 
     /*@Bean
     @ConditionalOnClass(SimpleDriverDataSource.class)

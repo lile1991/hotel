@@ -20,7 +20,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.hotel.controller")
-public class HotelWebConfig extends WebMvcConfigurerAdapter {
+public class HotelWebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

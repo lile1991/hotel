@@ -1,39 +1,37 @@
 package com.hotel.room.config;
 
-import org.hibernate.SessionFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.sql.Driver;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.hotel.room.dao")
 @EntityScan(basePackages = "com.hotel.room.entity")
 @ComponentScan(basePackages = "com.hotel.room.service")
-public class HotelRoomServiceConfig {
+public class HotelRoomServiceConfiguration {
 
-    @Bean
+    /*@Bean
     @ConditionalOnClass(SimpleDriverDataSource.class)
-    public DataSource createDataSource(DataSourceProperties dataSourceProperties) throws ClassNotFoundException {
+    public DataSource dataSource(DataSourceProperties dataSourceProperties) throws ClassNotFoundException {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriverClass((Class<? extends Driver>) Class.forName(dataSourceProperties.getDriverClassName()));
         dataSource.setUrl(dataSourceProperties.getUrl());
         dataSource.setUsername(dataSourceProperties.getUsername());
         dataSource.setPassword(dataSourceProperties.getPassword());
         return dataSource;
-    }
+    }*/
 
-    @Bean
+    // 其中 dataSource 框架会自动为我们注入
+    /*@Bean
+    @ConditionalOnBean(DataSource.class)
+    public PlatformTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }*/
+
+    /*@Bean
     public SessionFactory sessionFactory(EntityManagerFactory emf) {
         return emf.unwrap(SessionFactory.class);
-    }
+    }*/
 
 }

@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Slf4j
 @Configuration
-public class ShiroConfig implements ApplicationContextAware {
+public class ShiroConfiguration implements ApplicationContextAware {
 
     @Setter
     private ApplicationContext applicationContext;

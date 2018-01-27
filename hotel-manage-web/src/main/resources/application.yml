@@ -9,12 +9,6 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/hotel?useUnicode=true&characterEncoding=utf-8
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password:
-    type: org.springframework.jdbc.datasource.SimpleDriverDataSource
   jpa:
     open-in-view: false
     hibernate:
@@ -25,6 +19,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  aop:
+    proxy-target-class: true
+
+
+alibaba:
+  druid:
+    url: jdbc:mysql://localhost:3306/hotel?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password:
 
 logging:
   level:
