@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "com.hotel.user.entity")
 @ComponentScan(basePackages = "com.hotel.user.service")
 //@EnableConfigurationProperties(DataSourceProperties.class)
-//@EnableTransactionManagement
 public class HotelUserServiceConfiguration {
 
     /*@Bean
