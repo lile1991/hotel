@@ -37,4 +37,9 @@ public class DruidAutoConfiguration {
         return dataSource;
     }
 
+    /*@Bean
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }*/
+
 }

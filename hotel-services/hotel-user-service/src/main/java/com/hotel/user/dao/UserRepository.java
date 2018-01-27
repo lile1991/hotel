@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends BaseRepository<User, Long> {
+
     User findByUsernameOrMobile(String username, String mobile);
 
     @Query("update User set locked = :locked where id = :id")
