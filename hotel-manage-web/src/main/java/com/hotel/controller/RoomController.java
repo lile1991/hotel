@@ -43,7 +43,7 @@ public class RoomController extends BaseController {
 
     @GetMapping("enable/{id}")
     @ResponseBody
-    @RequiresPermissions("room:enable")
+//    @RequiresPermissions("room:enable")
     public ResultVo<?> enable(@PathVariable("id") Long id) {
         int result = roomManage.enable(id);
         if(result == 1) {
@@ -54,7 +54,7 @@ public class RoomController extends BaseController {
 
     @GetMapping("disable/{id}")
     @ResponseBody
-    @RequiresPermissions("room:disable")
+//    @RequiresPermissions("room:disable")
     public ResultVo<?> disable(@PathVariable("id") Long id) {
         int result = roomManage.disable(id);
         if(result == 1) {
