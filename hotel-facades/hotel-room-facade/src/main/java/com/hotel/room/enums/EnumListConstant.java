@@ -1,5 +1,6 @@
 package com.hotel.room.enums;
 
+import com.hotel.enums.EnumInterface;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

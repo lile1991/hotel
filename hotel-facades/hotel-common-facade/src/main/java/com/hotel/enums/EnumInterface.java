@@ -1,4 +1,4 @@
-package com.hotel.room.enums;
+package com.hotel.enums;
 
 public interface EnumInterface {
     String name();

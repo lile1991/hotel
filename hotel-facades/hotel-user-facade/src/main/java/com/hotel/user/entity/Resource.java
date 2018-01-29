@@ -18,7 +18,7 @@ public class Resource implements Serializable {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    private Integer type;
+    private String type;
 
     private String module;
 
@@ -27,6 +27,9 @@ public class Resource implements Serializable {
     private String value;
 
     private String remark;
+
+    @Column(name = "parent_id")
+    private Long parentId;
 
     /*public String getGroupAndValue() {
         return group + ":" + value;

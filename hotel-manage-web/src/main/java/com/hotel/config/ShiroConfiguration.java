@@ -35,7 +35,7 @@ public class ShiroConfiguration implements ApplicationContextAware {
         shiroFilterFactoryBean.setSecurityManager(securityManager());
 
         //要求登录时的链接(可根据项目的URL进行替换),非必须的属性,默认会自动寻找Web工程根目录下的"/login.jsp"页面
-//        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/");
 
         //登录成功后要跳转的连接,逻辑也可以自定义，例如返回上次请求的页面
 //        shiroFilterFactoryBean.setSuccessUrl("/index");
