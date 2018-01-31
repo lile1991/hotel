@@ -1,5 +1,7 @@
 package com.hotel.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hotel.shiro.AjaxAuthenticatingFilter;
 import com.hotel.shiro.UserRealm;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,7 +33,7 @@ public class ShiroConfiguration implements ApplicationContextAware {
 
     @Bean("shiroFilter")
     @ConditionalOnMissingBean(ShiroFilterFactoryBean.class)
-    public ShiroFilterFactoryBean shiroFilterFactoryBean() {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(ObjectMapper objectMapper) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //Shiro的核心安全接口,这个属性是必须的
         shiroFilterFactoryBean.setSecurityManager(securityManager());
@@ -44,11 +48,10 @@ public class ShiroConfiguration implements ApplicationContextAware {
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
         /*定义shiro过滤器,例如实现自定义的FormAuthenticationFilter，需要继承FormAuthenticationFilter
-         **本例中暂不自定义实现，在下一节实现验证码的例子中体现
          */
-//        Map<String, Filter> filters = new HashMap<>();
-//        filters.put("authc", authenticatingFilter());
-//        shiroFilterFactoryBean.setFilters(filters);
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("authc", authenticatingFilter(objectMapper));
+        shiroFilterFactoryBean.setFilters(filters);
 
         /*定义shiro过滤链  Map结构
          * Map中key(xml中是指value值)的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的
@@ -63,11 +66,20 @@ public class ShiroConfiguration implements ApplicationContextAware {
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
 //        filterChainDefinitionMap.put("/webui/**", "anon");
 //        filterChainDefinitionMap.put("/webjars/**", "anon");
-        filterChainDefinitionMap.put("/hotel-manage/user/login", "anon");
+//        filterChainDefinitionMap.put("/hotel-manage/user/login", "anon");
         filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
+    }
+
+    @Bean
+    @DependsOn("objectMapper")
+    public Filter authenticatingFilter(ObjectMapper objectMapper) {
+        AjaxAuthenticatingFilter ajaxAuthenticatingFilter = new AjaxAuthenticatingFilter();
+        ajaxAuthenticatingFilter.setObjectMapper(objectMapper);
+        ajaxAuthenticatingFilter.setLoginUrl("/hotel-manage/user/login");
+        return ajaxAuthenticatingFilter;
     }
 
     /**
