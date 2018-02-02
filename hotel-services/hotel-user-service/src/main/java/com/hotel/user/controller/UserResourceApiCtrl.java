@@ -19,4 +19,9 @@ public class UserResourceApiCtrl implements UserResourceApi {
     public List<Resource> findByUserId(Long userId) {
         return userResourceService.findByUserId(userId);
     }
+
+    @Override
+    public void grantAuth(Long userId, List<Long> resourceIdList) {
+        userResourceService.grantAuth(userId, resourceIdList);
+    }
 }

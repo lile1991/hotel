@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserResourceRepository extends BaseRepository<UserResource, Long> {
+    int deleteByUserId(Long userId);
 }

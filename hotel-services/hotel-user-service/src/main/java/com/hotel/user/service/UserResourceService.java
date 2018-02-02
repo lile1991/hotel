@@ -32,4 +32,15 @@ public class UserResourceService extends BaseService<UserResource, Long, UserRes
         }
         return new ArrayList<>();
     }
+
+    @Transactional
+    public void grantAuth(Long userId, List<Long> resourceIdList) {
+        repository.deleteByUserId(userId);
+        resourceIdList.forEach(resourceId -> {
+            UserResource userResource = new UserResource();
+            userResource.setResourceId(resourceId);
+            userResource.setUserId(userId);
+            save(userResource);
+        });
+    }
 }

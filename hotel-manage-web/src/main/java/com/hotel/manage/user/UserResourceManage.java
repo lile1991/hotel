@@ -16,4 +16,8 @@ public class UserResourceManage {
     public List<Resource> findByUserId(Long userId) {
         return userResourceApi.findByUserId(userId);
     }
+
+    public void grantAuth(Long userId, List<Long> resourceIdList) {
+        userResourceApi.grantAuth(userId, resourceIdList);
+    }
 }

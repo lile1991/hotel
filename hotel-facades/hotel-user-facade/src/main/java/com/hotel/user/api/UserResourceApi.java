@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface UserResourceApi {
     List<Resource> findByUserId(Long userId);
+
+    void grantAuth(Long userId, List<Long> resourceIdList);
 }
