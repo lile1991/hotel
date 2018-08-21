@@ -1,6 +1,5 @@
 package com.hotel.service;
 
-import com.hotel.room.HotelRoomServiceApplication;
 import com.hotel.room.entity.Room;
 import com.hotel.room.entity.RoomFloor;
 import com.hotel.room.entity.RoomType;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -20,7 +18,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Import(HotelRoomServiceApplication.class)
+//@Import(HotelRoomServiceApplication.class)
 public class RoomServiceTest {
 
     @Autowired

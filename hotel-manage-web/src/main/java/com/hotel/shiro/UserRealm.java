@@ -54,16 +54,16 @@ public class UserRealm extends AuthorizingRealm {
 
         UserSessionVo userSessionVo = new UserSessionVo();
         userSessionVo.setId(user.getId());
-        userSessionVo.setCredentials(user.getPassword());
-
-        // 密码加密， 数据库已经是加密后的， 这里无需再次加密
-        // new Md5Hash(user.getPassword(), salt, 2).toString();
 
         String salt = "CBD";    // 盐  可以存到用户表里， 用不一样的值
+
+        // 密码加密， 数据库已经是加密后的， 这里无需再次加密
+//        new Md5Hash("admin123", salt, 2).toString();
+
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以在此判断或自定义实现
         return new SimpleAuthenticationInfo(
                 userSessionVo, //用户ID
-                userSessionVo.getCredentials(), // 数据库中的密码
+                user.getPassword(), // 数据库中的密码
                 ByteSource.Util.bytes(salt),// 有点咸
                 getName()  //realm name
         );

@@ -19,7 +19,7 @@ public class AjaxAuthenticatingFilter extends FormAuthenticationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         if (isLoginRequest(request, response)) {
-            if (isLoginSubmission(request, response)) {
+            /*if (isLoginSubmission(request, response)) {
                 if (log.isTraceEnabled()) {
                     log.trace("Login submission detected.  Attempting to execute login.");
                 }
@@ -30,7 +30,8 @@ public class AjaxAuthenticatingFilter extends FormAuthenticationFilter {
                 }
                 //allow them to see the login page ;)
                 return true;
-            }
+            }*/
+            return true;
         } else {
             if (log.isTraceEnabled()) {
                 log.trace("用户未登录");
